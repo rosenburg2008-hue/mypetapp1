@@ -25,7 +25,7 @@
   --white:#FFFFFF;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:84px}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--hh,68px) + 16px)}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:'Gowun Dodum',system-ui,sans-serif;font-size:17px;line-height:1.75;word-break:keep-all;overflow-wrap:break-word}
 h1,h2,h3,.display{font-family:'Jua',system-ui,sans-serif;font-weight:400;line-height:1.28;margin:0}
 h1{font-size:clamp(2.3rem,5.2vw,3.9rem);letter-spacing:-.01em}
@@ -52,6 +52,14 @@ img,svg{max-width:100%}
 .seg{display:flex;background:var(--white);border:1.5px solid var(--line);border-radius:999px;padding:3px;flex-shrink:0}
 .seg button{font:inherit;font-size:.9rem;border:0;background:transparent;color:var(--ink2);padding:5px 12px;border-radius:999px;cursor:pointer}
 .seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.seg[hidden]{display:none}
+.tabs{display:flex;gap:4px;background:var(--white);border:1.5px solid var(--line);border-radius:999px;padding:4px;flex-shrink:0}
+.tabs button{font:inherit;font-family:'Jua';font-size:1rem;border:0;background:transparent;color:var(--ink2);padding:7px 18px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.tabs button:hover{background:var(--leaf)}
+.tabs button[aria-selected="true"]{background:var(--grass);color:#fff}
+.tabs button[aria-selected="true"]:hover{background:var(--grass)}
+.nav a[hidden]{display:none}
+[data-view][hidden]{display:none}
 
 /* 히어로 */
 .hero{padding:64px 0 72px}
@@ -95,6 +103,11 @@ img,svg{max-width:100%}
 .chip.dog{background:var(--ballSoft);color:var(--ballInk)}
 .chip.cat{background:var(--yarnSoft);color:var(--yarnInk)}
 .empty{background:#fff;border:1.5px dashed var(--line);border-radius:18px;padding:26px;color:var(--ink2)}
+.cats button .cnt{margin-left:6px;font-size:.82rem;opacity:.6;font-variant-numeric:tabular-nums}
+.cats button[aria-pressed="true"] .cnt{opacity:.85}
+.more{display:flex;justify-content:center;margin-top:24px}
+.more[hidden]{display:none}
+.card:focus{outline:none}
 
 /* 마당 */
 .madang{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;align-items:start}
@@ -189,13 +202,15 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
   .principles,.timeline{grid-template-columns:1fr}
   footer ol{columns:1}
   .top .wrap{flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
-  .nav{order:3;flex-basis:100%}
-  .top .wrap{gap:8px 12px;justify-content:space-between;padding-left:16px;padding-right:16px}
-  .logo{font-size:1.25rem}
+  .top .wrap{gap:8px 12px;justify-content:space-between;padding-left:16px;padding-right:16px;min-height:0}
+  .logo{order:1;font-size:1.25rem}
   .logo svg{width:38px;height:26px}
+  .seg{order:2;margin-left:auto}
   .seg button{padding:4px 9px;font-size:.85rem}
+  .tabs{order:3;flex-basis:100%;padding:3px}
+  .tabs button{flex:1;text-align:center;padding:7px 10px;font-size:.97rem}
+  .nav{order:4;flex-basis:100%;gap:2px}
   .nav a{padding:3px 10px;font-size:.9rem}
-  html{scroll-padding-top:120px}
   .sec{padding:64px 0}
 }
 @media (prefers-reduced-motion:reduce){
@@ -234,12 +249,17 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
       <svg viewBox="0 0 66 44" aria-hidden="true"><use href="#i-dog" x="0" y="0" width="40" height="40"/><use href="#i-cat" x="24" y="2" width="40" height="40"/></svg>
       멍냥마당
     </a>
-    <nav class="nav" aria-label="주요 메뉴">
-      <a href="#info">정보 찾기</a>
-      <a href="#madang">동네 마당</a>
-      <a href="#research">시장 전수조사</a>
-      <a href="#proposal">개발 제안</a>
-      <a href="#sources">출처</a>
+    <div class="tabs" role="tablist" aria-label="페이지 영역 선택">
+      <button type="button" id="tab-service" role="tab" data-tab="app" aria-controls="service" aria-selected="true">서비스 시안</button>
+      <button type="button" id="tab-report" role="tab" data-tab="report" aria-controls="report" aria-selected="false">기획 제안서</button>
+    </div>
+    <nav class="nav" aria-label="섹션 바로가기">
+      <a href="#info" data-nav="app">정보 찾기</a>
+      <a href="#madang" data-nav="app">동네 마당</a>
+      <a href="#research" data-nav="report" hidden>시장 전수조사</a>
+      <a href="#proposal" data-nav="report" hidden>개발 제안</a>
+      <a href="#road" data-nav="report" hidden>단계별 계획</a>
+      <a href="#sources" data-nav="report" hidden>출처</a>
     </nav>
     <div class="seg" role="group" aria-label="보고 싶은 반려동물 선택">
       <button type="button" data-sp-btn="all" aria-pressed="true">모두</button>
@@ -250,14 +270,16 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
 </header>
 
 <main id="main">
+
+<div id="service" data-view="app" role="tabpanel" aria-labelledby="tab-service">
 <section class="hero" id="top">
   <div class="wrap">
     <div>
       <h1>개와 고양이, 그리고 이웃이 만나는 동네 마당</h1>
-      <p class="lead">멍냥마당은 보호자가 믿을 수 있는 정보를 찾고, 우리 아이의 하루를 기록하고, 동네 친구를 사귀는 반려동물 포털입니다. 이 페이지에는 서비스 시안과 함께, 기존 앱과 시장 전체를 조사해 이 앱을 어떻게 만들어야 하는지 정리한 제안서가 담겨 있습니다.</p>
+      <p class="lead">강아지와 고양이를 키우며 생기는 궁금증을 믿을 수 있는 정보로 풀고, 우리 아이의 하루를 기록하고, 같은 동네 이웃과 산책 친구나 탁묘 품앗이로 이어지는 곳. 멍냥마당은 개와 고양이를 똑같이 대접하는 동네 반려생활 포털입니다.</p>
       <div class="btns">
         <a class="btn primary" href="#info">정보 찾아보기</a>
-        <a class="btn ghost" href="#research">조사 결과 보기</a>
+        <a class="btn ghost" href="#report">조사 결과 보기</a>
       </div>
       <p class="hero-note">국내 반려가구는 591만 가구로 전체 가구의 26.7%입니다. 반려견은 줄고 반려묘는 늘고 있습니다. (KB경영연구소, 2024년 말 기준)</p>
     </div>
@@ -316,6 +338,7 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
       <div class="cats" id="cats" role="group" aria-label="분류"></div>
     </div>
     <div class="grid" id="infoGrid" aria-live="polite"></div>
+    <div class="more" id="moreWrap" hidden><button type="button" class="btn ghost" id="moreBtn">더 보기</button></div>
     <p class="small" style="margin-top:18px">여기 실린 정보는 시안용 예시입니다. 출시 전에는 모든 건강 정보를 수의사가 검수하고, 검수자와 검수일을 카드마다 표시합니다. 이 정보는 진료를 대신하지 않습니다.</p>
   </div>
 </section>
@@ -382,6 +405,9 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
   </div>
 </section>
 
+</div><!-- /#service -->
+
+<div id="report" data-view="report" role="tabpanel" aria-labelledby="tab-report" hidden>
 <section class="sec alt" id="research" aria-labelledby="research-h">
   <div class="wrap">
     <div class="sec-head">
@@ -555,7 +581,7 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
   </div>
 </section>
 
-<section class="sec" aria-labelledby="road-h">
+<section class="sec" id="road" aria-labelledby="road-h">
   <div class="wrap">
     <div class="sec-head">
       <h2 id="road-h">단계별 개발 계획</h2>
@@ -656,9 +682,11 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
     </div>
   </div>
 </section>
+</div><!-- /#report -->
+
 </main>
 
-<footer id="sources">
+<footer id="sources" data-view="report" hidden>
   <div class="wrap">
     <h2>출처</h2>
     <p>수치는 아래 공개 자료에서 확인했으며, 2026년 9월 기준 공개 자료를 바탕으로 합니다. 유료 보고서는 공개 요약본만 참고했습니다.</p>
@@ -705,7 +733,38 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
     {sp:'all', cat:'건강', t:'비만 확인: 갈비뼈가 만져지나요', b:'옆구리를 가볍게 쓸었을 때 갈비뼈가 만져지고 위에서 볼 때 허리선이 보이면 알맞은 체형입니다. 체중은 한 달에 한 번 기록해 두세요.'},
     {sp:'all', cat:'생활', t:'혼자 있는 시간을 덜 지루하게', b:'노즈워크 매트, 퍼즐 급식기, 창가 자리, 캣타워처럼 스스로 탐색할 거리를 두면 혼자 있을 때의 스트레스를 줄이는 데 도움이 됩니다.'},
     {sp:'all', cat:'이별', t:'펫로스, 슬퍼해도 괜찮습니다', b:'충분히 슬퍼하는 시간은 자연스러운 회복 과정입니다. 일상이 오래 무너진다면 전문 상담을 받아 보세요.'},
-    {sp:'all', cat:'입양', t:'입양 전에 가족과 정할 네 가지', b:'누가 주로 돌볼지, 한 달 양육비를 얼마로 잡을지, 여행이나 출장 때 누구에게 맡길지, 알레르기가 있는 가족은 없는지 먼저 이야기하세요.'}
+    {sp:'all', cat:'입양', t:'입양 전에 가족과 정할 네 가지', b:'누가 주로 돌볼지, 한 달 양육비를 얼마로 잡을지, 여행이나 출장 때 누구에게 맡길지, 알레르기가 있는 가족은 없는지 먼저 이야기하세요.'},
+
+    {sp:'all', cat:'먹거리', t:'사료를 바꿀 때는 일주일에 걸쳐 천천히', b:'새 사료를 갑자기 주면 설사나 구토가 오기 쉽습니다. 기존 사료에 새 사료를 조금씩 섞어 일주일 정도에 걸쳐 비율을 늘려 주세요.'},
+    {sp:'cat', cat:'산책', t:'고양이에게 산책은 필수가 아닙니다', b:'바깥 산책은 고양이에게 즐거움보다 스트레스가 되는 경우가 많습니다. 창가 자리와 캣타워, 사냥 놀이로 집 안에서 충분히 움직이게 해 주는 편이 안전합니다.'},
+    {sp:'all', cat:'산책', t:'현관문 앞에서 잠깐 멈추기', b:'문이 열린 순간 놀라서 뛰쳐나가는 일은 가장 흔한 실종 원인입니다. 이름과 연락처를 적은 인식표를 달고, 목줄이나 이동장이 헐겁지 않은지 나가기 전에 확인하세요.'},
+    {sp:'all', cat:'제도', t:'이사하면 등록 정보도 바꿔 주세요', b:'등록한 반려동물의 주소나 연락처, 보호자가 바뀌면 변경 신고를 해야 합니다. 옛날 번호가 그대로 남아 있으면 잃어버렸을 때 연락을 받지 못합니다.'},
+    {sp:'all', cat:'행동', t:'혼내기보다 잘한 행동을 칭찬하기', b:'겁을 주는 방식은 문제 행동을 줄이기보다 불안과 공격성을 키우는 경우가 많습니다. 원하는 행동이 나온 바로 그때 간식과 칭찬으로 알려 주면 더 빨리 배웁니다.'},
+    {sp:'dog', cat:'생활', t:'정해진 시간에 나누어 주기', b:'하루 종일 그릇을 채워 두는 것보다 시간을 정해 나누어 주면 먹는 양과 식욕 변화를 알아채기 쉽습니다. 식사 앞뒤 한 시간은 격한 운동을 피하는 편이 좋습니다.'},
+    {sp:'dog', cat:'이별', t:'남은 반려견도 빈자리를 느낍니다', b:'함께 지내던 동물이 떠나면 남은 아이가 밥을 덜 먹거나 집 안을 자꾸 찾아다닐 수 있습니다. 산책과 식사 시간을 평소대로 지켜 주고, 며칠 넘게 이어지면 진료를 받아 보세요.'},
+    {sp:'cat', cat:'이별', t:'쓰던 물건을 한꺼번에 치우지 않기', b:'남은 고양이에게는 익숙한 냄새가 갑자기 사라지는 것도 큰 변화입니다. 잠자리와 화장실 위치는 그대로 두고 천천히 정리하세요.'},
+    {sp:'dog', cat:'입양', t:'강아지를 데려오기 전에 물어볼 것', b:'어미와 형제와 지낸 기간, 예방접종과 구충 기록, 부모의 건강 상태를 확인하세요. 생후 8주가 되기 전에 어미와 떨어진 강아지는 이후 행동 문제가 생기기 쉽습니다.'},
+    {sp:'cat', cat:'입양', t:'첫 주에는 방 하나에서 시작하세요', b:'집 전체를 한 번에 열어 주면 숨어서 나오지 않는 일이 많습니다. 화장실과 밥, 숨을 곳을 갖춘 방 하나에서 시작해 스스로 나올 때까지 기다려 주세요.'},
+
+    {sp:'dog', cat:'미용과 목욕', t:'목욕은 자주 할수록 좋지 않습니다', b:'너무 잦은 목욕은 피부를 지키는 기름막을 벗겨 건조하고 가렵게 만듭니다. 반려견용 샴푸로 한 달에 한두 번이 보통이고, 씻긴 뒤에는 속털까지 완전히 말려 주세요.'},
+    {sp:'cat', cat:'미용과 목욕', t:'고양이는 대개 목욕이 필요 없습니다', b:'고양이는 스스로 그루밍으로 몸을 관리하므로 많이 더러워졌을 때만으로 충분합니다. 대신 빗질을 자주 해 주면 털 뭉침과 헤어볼을 줄이는 데 도움이 됩니다.'},
+    {sp:'all', cat:'미용과 목욕', t:'발톱은 분홍색 부분 앞에서 멈추기', b:'발톱 안쪽에는 혈관과 신경이 지나가므로 끝부분만 조금씩 자릅니다. 어두운 발톱이라 잘 보이지 않으면 한 번에 많이 자르지 말고 여러 번 나누어 깎으세요.'},
+
+    {sp:'dog', cat:'계절 건강', t:'코가 짧은 개는 더위에 특히 약합니다', b:'퍼그, 불독, 시추처럼 코가 짧은 개는 헐떡임으로 열을 내보내기 어려워 여름에 위험합니다. 한낮 외출을 피하고 그늘과 시원한 물을 늘 준비해 주세요.'},
+    {sp:'cat', cat:'계절 건강', t:'겨울에는 시동 전에 보닛을 두드려 주세요', b:'추운 날 고양이가 온기를 찾아 자동차 엔진룸으로 들어가는 일이 있습니다. 시동을 걸기 전에 보닛을 몇 번 두드리거나 경적을 한 번 울려 주세요.'},
+    {sp:'all', cat:'계절 건강', t:'난방기구 앞 저온화상을 조심하세요', b:'전기방석이나 온풍기 앞에 오래 붙어 있으면 뜨겁다고 느끼지 못한 채 피부가 상할 수 있습니다. 따뜻한 자리와 시원한 자리를 함께 두어 스스로 옮겨 다니게 해 주세요.'},
+
+    {sp:'dog', cat:'노령 반려동물', t:'노견은 뒷다리부터 힘이 빠집니다', b:'미끄러운 바닥은 관절에 부담이 되고 넘어지기도 쉽습니다. 자주 다니는 길에 미끄럼 방지 매트를 깔고, 산책은 한 번에 길게보다 짧게 여러 번으로 나누세요.'},
+    {sp:'cat', cat:'노령 반려동물', t:'나이 든 고양이는 물 마시는 양을 봐 주세요', b:'물을 갑자기 많이 마시거나 소변 양이 늘면 신장이나 갑상선 문제의 신호일 수 있습니다. 체중과 함께 기록해 두고 정기 검진 때 보여 주세요.'},
+    {sp:'all', cat:'노령 반려동물', t:'일곱 살부터는 해마다 건강검진', b:'나이가 들면 병이 빠르게 진행되므로 증상이 없을 때 미리 확인하는 것이 중요합니다. 체중과 치아 상태, 검사 결과를 기록으로 남겨 두면 변화를 비교하기 좋습니다.'},
+
+    {sp:'dog', cat:'응급 상황', t:'이물질을 삼킨 것 같을 때', b:'양말, 장난감, 뼈 조각은 장을 막을 수 있습니다. 억지로 토하게 하지 말고 무엇을 언제 얼마나 삼켰는지 적어 바로 동물병원에 연락하세요.'},
+    {sp:'cat', cat:'응급 상황', t:'소변을 못 보고 화장실을 들락거릴 때', b:'특히 수컷 고양이는 요도가 막히면 하루 안에 생명이 위험해질 수 있습니다. 자세만 잡고 소변이 나오지 않는다면 바로 동물병원에 연락하세요.'},
+    {sp:'all', cat:'응급 상황', t:'열사병이 의심될 때', b:'헐떡임이 멈추지 않고 잇몸이 붉거나 비틀거리면 응급 상황입니다. 시원한 곳으로 옮기고 미지근한 물로 몸을 적시면서 바로 동물병원에 연락하세요. 얼음물은 쓰지 않습니다.'},
+
+    {sp:'dog', cat:'여행과 이동', t:'차멀미는 익숙해지는 연습으로 줄입니다', b:'출발 두세 시간 전부터는 먹이지 않고, 가까운 거리를 즐거운 곳에 다녀오는 연습부터 반복하세요. 자주 환기하고 한 시간마다 쉬어 가는 편이 좋습니다.'},
+    {sp:'cat', cat:'여행과 이동', t:'이동장은 평소에 열어 두세요', b:'병원 갈 때만 꺼내면 이동장 자체를 무서워하게 됩니다. 평소 문을 열어 방에 두고 담요와 간식을 넣어 편한 잠자리로 만들어 주세요.'},
+    {sp:'all', cat:'여행과 이동', t:'차 안에 잠깐도 혼자 두지 마세요', b:'흐린 날에도 주차된 차 안은 짧은 시간에 위험한 온도까지 오릅니다. 창문을 조금 열어 두어도 마찬가지이므로 잠깐이라도 혼자 두지 않는 것이 안전합니다.'}
   ];
 
   var FEED = [
@@ -755,16 +814,29 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
   var catNames = ['전체'];
   INFO.forEach(function(i){ if (catNames.indexOf(i.cat) < 0) catNames.push(i.cat); });
   catBox.innerHTML = catNames.map(function(c){
-    return '<button type="button" data-cat="' + esc(c) + '" aria-pressed="' + (c === '전체') + '">' + esc(c) + '</button>';
+    return '<button type="button" data-cat="' + esc(c) + '" aria-pressed="' + (c === '전체') + '">' + esc(c) + '<span class="cnt"></span></button>';
   }).join('');
   catBox.addEventListener('click', function(e){
     var b = e.target.closest('button'); if (!b) return;
     state.cat = b.getAttribute('data-cat');
     catBox.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    shown = PAGE;
     renderInfo();
   });
 
-  document.getElementById('q').addEventListener('input', function(e){ state.q = e.target.value.trim(); renderInfo(); });
+  /* 분류 버튼의 카드 개수. 지금 고른 동물에 맞춰 세고, 검색어는 반영하지 않습니다 */
+  function updateCatCounts(){
+    catBox.querySelectorAll('button').forEach(function(b){
+      var c = b.getAttribute('data-cat');
+      var n = INFO.filter(function(i){ return spOk(i.sp) && (c === '전체' || i.cat === c); }).length;
+      b.querySelector('.cnt').textContent = n;
+    });
+  }
+
+  document.getElementById('q').addEventListener('input', function(e){ state.q = e.target.value.trim(); shown = PAGE; renderInfo(); });
+
+  var PAGE = 12;
+  var shown = PAGE;
 
   function renderInfo(){
     var list = INFO.filter(function(i){
@@ -773,17 +845,33 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
       return spOk(i.sp) && okCat && okQ;
     });
     var grid = document.getElementById('infoGrid');
+    var moreWrap = document.getElementById('moreWrap');
+    updateCatCounts();
     if (!list.length){
       grid.innerHTML = '<div class="empty">찾는 내용과 맞는 정보가 없습니다. 다른 단어로 검색하거나 분류를 전체로 바꿔 보세요.</div>';
+      moreWrap.hidden = true;
       return;
     }
-    grid.innerHTML = list.map(function(i){
+    var vis = list.slice(0, shown);
+    grid.innerHTML = vis.map(function(i){
       return '<article class="card" data-sp="' + i.sp + '">' +
         '<div class="chips">' + spChip(i.sp) + '<span class="chip">' + esc(i.cat) + '</span></div>' +
         '<h3>' + esc(i.t) + '</h3><p>' + esc(i.b) + '</p>' +
         '<div class="foot">시안용 예시, 출시 전 수의사 검수 예정</div></article>';
     }).join('');
+    var rest = list.length - vis.length;
+    moreWrap.hidden = rest < 1;
+    if (rest > 0) document.getElementById('moreBtn').textContent = '더 보기 (남은 ' + rest + '개)';
   }
+
+  document.getElementById('moreBtn').addEventListener('click', function(){
+    var from = document.getElementById('infoGrid').children.length;
+    shown = INFO.length;
+    renderInfo();
+    /* 버튼이 사라지므로 새로 나온 첫 카드로 초점을 옮깁니다 */
+    var first = document.getElementById('infoGrid').children[from];
+    if (first){ first.setAttribute('tabindex', '-1'); first.focus(); }
+  });
 
   function renderFeed(){
     var box = document.getElementById('feed');
@@ -877,13 +965,57 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
     state.sp = sp;
     document.querySelectorAll('[data-sp-btn]').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-sp-btn') === sp ? 'true' : 'false'); });
     if (sp === 'dog' || sp === 'cat') document.getElementById('postSp').value = sp;
+    shown = PAGE;
     renderInfo(); renderFeed(); renderEvents(); panels();
   }
   document.querySelectorAll('[data-sp-btn]').forEach(function(b){
     b.addEventListener('click', function(){ setSpecies(b.getAttribute('data-sp-btn')); });
   });
 
+  /* 탭 전환과 주소(#) 처리 */
+  var REPORT_IDS = ['report','research','proposal','road','sources'];
+  var header = document.querySelector('.top');
+  var tabsBox = document.querySelector('.tabs');
+
+  function syncHeaderHeight(){
+    document.documentElement.style.setProperty('--hh', header.offsetHeight + 'px');
+  }
+
+  function setView(v){
+    document.querySelectorAll('[data-view]').forEach(function(el){
+      el.hidden = el.getAttribute('data-view') !== v;
+    });
+    tabsBox.querySelectorAll('button[data-tab]').forEach(function(b){
+      b.setAttribute('aria-selected', b.getAttribute('data-tab') === v ? 'true' : 'false');
+    });
+    document.querySelectorAll('.nav a[data-nav]').forEach(function(a){
+      a.hidden = a.getAttribute('data-nav') !== v;
+    });
+    document.querySelector('.seg').hidden = v !== 'app';
+    syncHeaderHeight();
+  }
+
+  function applyHash(){
+    var id = (location.hash || '').replace('#','');
+    setView(REPORT_IDS.indexOf(id) > -1 ? 'report' : 'app');
+    if (!id) return;
+    var el = document.getElementById(id);
+    if (el) el.scrollIntoView();
+  }
+
+  tabsBox.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-tab]'); if (!b) return;
+    var want = b.getAttribute('data-tab') === 'report' ? 'report' : 'top';
+    if ((location.hash || '').replace('#','') === want) applyHash();
+    else location.hash = want;
+  });
+  window.addEventListener('hashchange', applyHash);
+  window.addEventListener('resize', syncHeaderHeight);
+  /* 글꼴이 늦게 불러와지면 헤더 높이가 달라지므로 다시 잽니다 */
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncHeaderHeight);
+
   renderInfo(); renderFeed(); renderDogs(); renderCats(); renderEvents(); panels();
+  applyHash();
 })();
 </script>
 </body>
