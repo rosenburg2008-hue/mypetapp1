@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>멍냥마당 | 펫 관련 앱 기획 시안과 시장 전수조사 제안서</title>
+<meta name="description" content="개와 고양이 보호자를 위한 동네 기반 반려생활 포털 멍냥마당. 로젠버그 박사 기획.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F9F5;
+  --ink:#1F3A2E;
+  --ink2:#4A5F54;
+  --grass:#3F8A5F;
+  --leaf:#E6EFE6;
+  --ball:#F4C542;
+  --ballSoft:#FCEFC4;
+  --ballInk:#6E5100;
+  --yarn:#9A86D6;
+  --yarnSoft:#ECE7F8;
+  --yarnInk:#4B3A8C;
+  --line:#CFD9D1;
+  --white:#FFFFFF;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Gowun Dodum',system-ui,sans-serif;font-size:17px;line-height:1.75;word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3,.display{font-family:'Jua',system-ui,sans-serif;font-weight:400;line-height:1.28;margin:0}
+h1{font-size:clamp(2.3rem,5.2vw,3.9rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.8rem,3.4vw,2.6rem);margin-bottom:14px}
+h3{font-size:1.28rem;margin-bottom:6px}
+p{margin:0 0 1em}
+a{color:var(--grass)}
+img,svg{max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.lead{max-width:64ch;color:var(--ink2);font-size:1.06rem}
+.small{font-size:.88rem;color:var(--ink2)}
+:focus-visible{outline:3px solid var(--yarnInk);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:#fff;padding:8px 14px;border-radius:8px;z-index:100}
+.skip:focus{left:12px}
+
+/* 헤더 */
+.top{position:sticky;top:0;z-index:50;background:rgba(247,249,245,.94);backdrop-filter:blur(8px);border-bottom:1.5px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:20px;min-height:68px}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);font-family:'Jua';font-size:1.5rem;flex-shrink:0}
+.logo svg{width:44px;height:30px}
+.nav{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none}
+.nav a{color:var(--ink);text-decoration:none;padding:6px 12px;border-radius:999px;white-space:nowrap;font-size:.97rem}
+.nav a:hover{background:var(--leaf)}
+.seg{display:flex;background:var(--white);border:1.5px solid var(--line);border-radius:999px;padding:3px;flex-shrink:0}
+.seg button{font:inherit;font-size:.9rem;border:0;background:transparent;color:var(--ink2);padding:5px 12px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+
+/* 히어로 */
+.hero{padding:64px 0 72px}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
+.hero p.lead{margin-top:20px}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-block;font:inherit;text-decoration:none;border-radius:14px;padding:12px 22px;border:2px solid var(--ink);cursor:pointer;font-family:'Jua';font-size:1.08rem}
+.btn.primary{background:var(--ink);color:#fff}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:hover{transform:translateY(-1px)}
+.hero-note{margin-top:28px;font-size:.9rem;color:var(--ink2);border-left:4px solid var(--ball);padding-left:12px}
+.map{width:100%;height:auto;display:block}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.4s ease-out .3s forwards}
+.draw.late{animation-delay:1s}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+/* 섹션 */
+.sec{padding:88px 0}
+.sec.alt{background:var(--leaf)}
+.sec.dark{background:var(--ink);color:#EAF1EC}
+.sec.dark .lead,.sec.dark .small{color:#C4D3C9}
+.sec-head{margin-bottom:34px}
+
+/* 정보 허브 */
+.toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px}
+.search{flex:1 1 260px;display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:4px 14px}
+.search input{border:0;outline:0;font:inherit;flex:1;padding:8px 0;background:transparent;color:var(--ink)}
+.search:focus-within{border-color:var(--ink)}
+.cats{display:flex;flex-wrap:wrap;gap:6px}
+.cats button{font:inherit;font-size:.92rem;border:1.5px solid var(--line);background:#fff;color:var(--ink);padding:5px 13px;border-radius:999px;cursor:pointer}
+.cats button[aria-pressed="true"]{background:var(--grass);border-color:var(--grass);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.card{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:18px 20px 16px;display:flex;flex-direction:column}
+.card[data-sp="dog"]{border-top:6px solid var(--ball)}
+.card[data-sp="cat"]{border-top:6px solid var(--yarn)}
+.card[data-sp="all"]{border-top:6px solid var(--grass)}
+.card p{font-size:.96rem;color:var(--ink2);flex:1}
+.card .foot{font-size:.8rem;color:var(--ink2);border-top:1px dashed var(--line);padding-top:8px;margin-top:4px}
+.chips{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+.chip{display:inline-block;border-radius:999px;padding:1px 10px;font-size:.8rem;background:var(--leaf);color:var(--ink)}
+.chip.dog{background:var(--ballSoft);color:var(--ballInk)}
+.chip.cat{background:var(--yarnSoft);color:var(--yarnInk)}
+.empty{background:#fff;border:1.5px dashed var(--line);border-radius:18px;padding:26px;color:var(--ink2)}
+
+/* 마당 */
+.madang{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;align-items:start}
+.panel{background:#fff;border:1.5px solid var(--line);border-radius:22px;padding:22px}
+.panel + .panel{margin-top:20px}
+.panel[hidden]{display:none}
+.panel h3{display:flex;align-items:center;gap:8px}
+.panel h3 svg{width:30px;height:30px}
+.compose textarea{width:100%;min-height:78px;font:inherit;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;color:var(--ink);background:var(--paper)}
+.compose textarea:focus{border-color:var(--ink);outline:0}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
+select{font:inherit;font-size:.93rem;border:1.5px solid var(--line);border-radius:10px;padding:6px 10px;background:#fff;color:var(--ink)}
+.sbtn{white-space:nowrap;font:inherit;font-size:.92rem;border:1.5px solid var(--ink);background:var(--ink);color:#fff;border-radius:10px;padding:6px 14px;cursor:pointer}
+.sbtn.line{background:#fff;color:var(--ink)}
+.sbtn[aria-pressed="true"]{background:var(--grass);border-color:var(--grass);color:#fff}
+.msg{font-size:.88rem;color:#8A3030;min-height:1.3em;margin-top:6px}
+.post{display:grid;grid-template-columns:44px 1fr;gap:12px;padding:16px 0;border-top:1px solid var(--line)}
+.post:first-child{border-top:0}
+.avatar{width:44px;height:44px;border-radius:50%;background:var(--paper);display:grid;place-items:center}
+.avatar svg{width:36px;height:36px}
+.post .who{font-family:'Jua';font-size:1.05rem}
+.post .meta{font-size:.82rem;color:var(--ink2);margin-left:6px;font-family:'Gowun Dodum'}
+.post p{margin:4px 0 8px;font-size:.97rem}
+.like{font:inherit;font-size:.85rem;background:var(--paper);border:1.5px solid var(--line);border-radius:999px;padding:3px 12px;cursor:pointer;color:var(--ink)}
+.like[aria-pressed="true"]{background:var(--ballSoft);border-color:var(--ball);color:var(--ballInk)}
+.mlist{margin-top:12px}
+.mitem{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.mitem:first-child{border-top:0}
+.mitem b{font-family:'Jua';font-weight:400;font-size:1.02rem}
+.mitem span{font-size:.85rem;color:var(--ink2);display:block}
+.events{margin-top:28px}
+
+/* 표 */
+.tscroll{overflow-x:auto;border-radius:16px;border:1.5px solid var(--line);background:#fff}
+.tbl{width:100%;border-collapse:collapse;font-size:.94rem;min-width:640px}
+.tbl caption{text-align:left;padding:14px 16px 4px;font-size:.88rem;color:var(--ink2)}
+.tbl th{background:var(--ink);color:#fff;text-align:left;font-family:'Jua';font-weight:400;padding:11px 14px;font-size:.98rem}
+.tbl td{border-top:1px solid var(--line);padding:11px 14px;vertical-align:top}
+.tbl td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl tr.me td{background:var(--ballSoft)}
+.pill{display:inline-block;border-radius:999px;padding:1px 10px;font-size:.8rem;white-space:nowrap}
+.yes{background:#D9EEDF;color:#1F6B3F}
+.part{background:var(--ballSoft);color:var(--ballInk)}
+.no{background:#F3E4E4;color:#8A3030}
+.tbd{background:#E7ECE9;color:var(--ink2)}
+
+/* 조사 */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.two.wide{grid-template-columns:1.45fr 1fr}
+.status{background:#fff;border:2px solid var(--ink);border-radius:20px;padding:20px 22px;margin-bottom:34px}
+.status h3{font-size:1.15rem}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:40px 1fr;gap:12px;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px 16px}
+.steps li::before{content:counter(s);font-family:'Jua';font-size:1.3rem;width:34px;height:34px;border-radius:50%;background:var(--leaf);display:grid;place-items:center}
+.steps b{font-family:'Jua';font-weight:400;font-size:1.05rem;display:block}
+.steps span{font-size:.94rem;color:var(--ink2)}
+.figure{background:#fff;border:1.5px solid var(--line);border-radius:20px;padding:18px}
+.figure figcaption{font-size:.86rem;color:var(--ink2);margin-top:8px}
+.gaps{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.gap{background:#fff;border-radius:18px;padding:18px 20px;border-left:6px solid var(--grass)}
+.gap.cat{border-left-color:var(--yarn)}
+.gap.dog{border-left-color:var(--ball)}
+.gap p{font-size:.95rem;color:var(--ink2);margin:0}
+.sub{margin:56px 0 18px}
+
+/* 제안 */
+.statement{font-family:'Jua';font-size:clamp(1.4rem,2.6vw,2rem);line-height:1.45;max-width:30em;margin:6px 0 30px;color:#fff}
+.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.principles div{border:1.5px solid rgba(255,255,255,.25);border-radius:18px;padding:18px}
+.principles h3{color:var(--ball)}
+.principles p{font-size:.95rem;color:#C4D3C9;margin:0}
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:t}
+.phase{background:#fff;border:1.5px solid var(--line);border-radius:20px;padding:20px;position:relative}
+.phase .when{font-size:.85rem;color:var(--ink2)}
+.phase ol{margin:10px 0 0;padding-left:1.2em;font-size:.95rem}
+.phase ol li{margin-bottom:4px}
+.phase:nth-child(1){border-top:6px solid var(--ball)}
+.phase:nth-child(2){border-top:6px solid var(--grass)}
+.phase:nth-child(3){border-top:6px solid var(--yarn)}
+
+/* 푸터 */
+footer{background:var(--ink);color:#C4D3C9;padding:56px 0 40px;font-size:.9rem}
+footer h2{color:#fff;font-size:1.5rem}
+footer a{color:var(--ball)}
+footer ol{padding-left:1.3em;columns:2;column-gap:40px}
+footer ol li{margin-bottom:6px;break-inside:avoid}
+.credit{margin-top:30px;padding-top:18px;border-top:1px solid rgba(255,255,255,.2);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+.credit b{font-family:'Jua';font-weight:400;color:#fff;font-size:1.1rem}
+
+@media (max-width:900px){
+  .hero .wrap,.madang,.two,.two.wide{grid-template-columns:1fr}
+  .principles,.timeline{grid-template-columns:1fr}
+  footer ol{columns:1}
+  .top .wrap{flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+  .nav{order:3;flex-basis:100%}
+  .top .wrap{gap:8px 12px;justify-content:space-between;padding-left:16px;padding-right:16px}
+  .logo{font-size:1.25rem}
+  .logo svg{width:38px;height:26px}
+  .seg button{padding:4px 9px;font-size:.85rem}
+  .nav a{padding:3px 10px;font-size:.9rem}
+  html{scroll-padding-top:120px}
+  .sec{padding:64px 0}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .draw{animation:none;stroke-dashoffset:0}
+  .btn:hover{transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-dog" viewBox="0 0 48 48">
+    <ellipse cx="11" cy="21" rx="6" ry="11" fill="#B07A2A"/>
+    <ellipse cx="37" cy="21" rx="6" ry="11" fill="#B07A2A"/>
+    <circle cx="24" cy="27" r="15" fill="#F4C542"/>
+    <circle cx="18.5" cy="25" r="2" fill="#1F3A2E"/>
+    <circle cx="29.5" cy="25" r="2" fill="#1F3A2E"/>
+    <ellipse cx="24" cy="32" rx="3.3" ry="2.4" fill="#1F3A2E"/>
+  </symbol>
+  <symbol id="i-cat" viewBox="0 0 48 48">
+    <path d="M9 6 L22 16 L10 25 Z" fill="#9A86D6"/>
+    <path d="M39 6 L26 16 L38 25 Z" fill="#9A86D6"/>
+    <circle cx="24" cy="28" r="15" fill="#9A86D6"/>
+    <ellipse cx="18.5" cy="26" rx="2" ry="2.8" fill="#1F3A2E"/>
+    <ellipse cx="29.5" cy="26" rx="2" ry="2.8" fill="#1F3A2E"/>
+    <path d="M22 31 L26 31 L24 33.5 Z" fill="#F2A7B8"/>
+    <path d="M6 30 H16 M6 34 H16 M32 30 H42 M32 34 H42" stroke="#1F3A2E" stroke-width="1.2" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="멍냥마당 처음으로">
+      <svg viewBox="0 0 66 44" aria-hidden="true"><use href="#i-dog" x="0" y="0" width="40" height="40"/><use href="#i-cat" x="24" y="2" width="40" height="40"/></svg>
+      멍냥마당
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="#info">정보 찾기</a>
+      <a href="#madang">동네 마당</a>
+      <a href="#research">시장 전수조사</a>
+      <a href="#proposal">개발 제안</a>
+      <a href="#sources">출처</a>
+    </nav>
+    <div class="seg" role="group" aria-label="보고 싶은 반려동물 선택">
+      <button type="button" data-sp-btn="all" aria-pressed="true">모두</button>
+      <button type="button" data-sp-btn="dog" aria-pressed="false">강아지</button>
+      <button type="button" data-sp-btn="cat" aria-pressed="false">고양이</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <h1>개와 고양이, 그리고 이웃이 만나는 동네 마당</h1>
+      <p class="lead">멍냥마당은 보호자가 믿을 수 있는 정보를 찾고, 우리 아이의 하루를 기록하고, 동네 친구를 사귀는 반려동물 포털입니다. 이 페이지에는 서비스 시안과 함께, 기존 앱과 시장 전체를 조사해 이 앱을 어떻게 만들어야 하는지 정리한 제안서가 담겨 있습니다.</p>
+      <div class="btns">
+        <a class="btn primary" href="#info">정보 찾아보기</a>
+        <a class="btn ghost" href="#research">조사 결과 보기</a>
+      </div>
+      <p class="hero-note">국내 반려가구는 591만 가구로 전체 가구의 26.7%입니다. 반려견은 줄고 반려묘는 늘고 있습니다. (KB경영연구소, 2024년 말 기준)</p>
+    </div>
+    <svg class="map" viewBox="0 0 520 460" role="img" aria-label="동네 지도 위에서 강아지 산책길과 고양이 골목길이 가운데 마당에서 만나는 그림">
+      <defs>
+        <mask id="mDog" maskUnits="userSpaceOnUse" x="0" y="0" width="520" height="460">
+          <path class="draw" pathLength="1" d="M60 330 C 120 300, 150 240, 210 215 S 330 180, 380 150 S 450 110, 480 90" stroke="#fff" stroke-width="14" fill="none"/>
+        </mask>
+        <mask id="mCat" maskUnits="userSpaceOnUse" x="0" y="0" width="520" height="460">
+          <path class="draw late" pathLength="1" d="M60 70 C 140 90, 170 150, 230 190 S 300 250, 360 260 S 440 300, 470 330" stroke="#fff" stroke-width="14" fill="none"/>
+        </mask>
+      </defs>
+      <rect x="0" y="0" width="520" height="460" rx="32" fill="#E6EFE6"/>
+      <path d="M-10 372 C 120 332, 200 430, 330 392 S 480 342, 530 362 L530 470 L-10 470 Z" fill="#CFE3EA"/>
+      <g fill="#fff" stroke="#CFD9D1" stroke-width="1.5">
+        <rect x="30" y="112" width="100" height="70" rx="10"/>
+        <rect x="170" y="36" width="120" height="56" rx="10"/>
+        <rect x="330" y="26" width="110" height="50" rx="10"/>
+        <rect x="380" y="190" width="112" height="70" rx="10"/>
+        <rect x="180" y="300" width="130" height="50" rx="10"/>
+      </g>
+      <circle cx="260" cy="205" r="62" fill="#CFE5D3"/>
+      <g fill="#8FC19C"><circle cx="214" cy="170" r="8"/><circle cx="306" cy="238" r="9"/><circle cx="300" cy="166" r="7"/><circle cx="220" cy="242" r="7"/></g>
+      <g font-family="Gowun Dodum, sans-serif" font-size="13" fill="#4A5F54" text-anchor="middle">
+        <text x="80" y="152">동물병원</text>
+        <text x="230" y="69">골목 담장</text>
+        <text x="436" y="230">펫 동반 카페</text>
+        <text x="245" y="330">반려용품점</text>
+        <text x="410" y="420">하천 산책로</text>
+      </g>
+      <path d="M60 330 C 120 300, 150 240, 210 215 S 330 180, 380 150 S 450 110, 480 90" stroke="#E0A800" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 11" fill="none" mask="url(#mDog)"/>
+      <path d="M60 70 C 140 90, 170 150, 230 190 S 300 250, 360 260 S 440 300, 470 330" stroke="#7B66C4" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 11" fill="none" mask="url(#mCat)"/>
+      <use href="#i-dog" x="36" y="306" width="48" height="48"/>
+      <use href="#i-dog" x="456" y="66" width="48" height="48"/>
+      <use href="#i-cat" x="36" y="46" width="48" height="48"/>
+      <use href="#i-cat" x="446" y="306" width="48" height="48"/>
+      <use href="#i-dog" x="214" y="176" width="46" height="46"/>
+      <use href="#i-cat" x="258" y="176" width="46" height="46"/>
+      <text x="260" y="248" font-family="Jua, sans-serif" font-size="22" fill="#1F3A2E" text-anchor="middle">마당</text>
+    </svg>
+  </div>
+</section>
+
+<section class="sec alt" id="info" aria-labelledby="info-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="info-h">정보 찾기</h2>
+      <p class="lead">먹거리, 건강, 행동, 제도처럼 보호자가 자주 묻는 내용을 한곳에 모았습니다. 위쪽에서 강아지나 고양이를 고르면 해당 정보만 보입니다.</p>
+    </div>
+    <div class="toolbar">
+      <label class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="7" stroke="#4A5F54" stroke-width="2" fill="none"/><path d="M15 15 L21 21" stroke="#4A5F54" stroke-width="2" stroke-linecap="round"/></svg>
+        <span class="small" style="position:absolute;left:-999px">정보 검색</span>
+        <input id="q" type="search" placeholder="예: 포도, 화장실, 산책, 등록" autocomplete="off">
+      </label>
+      <div class="cats" id="cats" role="group" aria-label="분류"></div>
+    </div>
+    <div class="grid" id="infoGrid" aria-live="polite"></div>
+    <p class="small" style="margin-top:18px">여기 실린 정보는 시안용 예시입니다. 출시 전에는 모든 건강 정보를 수의사가 검수하고, 검수자와 검수일을 카드마다 표시합니다. 이 정보는 진료를 대신하지 않습니다.</p>
+  </div>
+</section>
+
+<section class="sec" id="madang" aria-labelledby="madang-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="madang-h">동네 마당</h2>
+      <p class="lead">강아지는 산책 친구를, 고양이는 집사 이웃을 만납니다. 고양이는 대부분 집 안에서 지내기 때문에 고양이의 교류는 보호자끼리 돌봄을 나누는 방식으로 설계했습니다. 아래 게시글과 친구, 모임은 모두 예시 데이터입니다.</p>
+    </div>
+    <div class="madang">
+      <div class="panel">
+        <h3>마당 소식</h3>
+        <div class="compose">
+          <label for="postText" class="small">우리 아이 이야기를 남겨 보세요</label>
+          <textarea id="postText" maxlength="300" placeholder="오늘 산책에서 있었던 일, 궁금한 점, 자랑하고 싶은 순간"></textarea>
+          <div class="row">
+            <select id="postSp" aria-label="게시글 반려동물">
+              <option value="dog">강아지 이야기</option>
+              <option value="cat">고양이 이야기</option>
+            </select>
+            <button type="button" class="sbtn" id="postBtn">게시하기</button>
+          </div>
+          <div class="msg" id="postMsg" role="status"></div>
+        </div>
+        <div id="feed" aria-live="polite"></div>
+      </div>
+      <div>
+        <div class="panel" id="dogPanel">
+          <h3><svg aria-hidden="true"><use href="#i-dog"/></svg>산책 친구 찾기</h3>
+          <p class="small">몸집과 산책 시간대가 맞는 동네 강아지를 찾아 인사를 보냅니다. 위치는 동네 단위로만 보입니다.</p>
+          <div class="row">
+            <select id="mSize" aria-label="몸집">
+              <option value="all">몸집 전체</option>
+              <option value="소형">소형견</option>
+              <option value="중형">중형견</option>
+              <option value="대형">대형견</option>
+            </select>
+            <select id="mTime" aria-label="산책 시간대">
+              <option value="all">시간대 전체</option>
+              <option value="아침">아침</option>
+              <option value="저녁">저녁</option>
+              <option value="밤">밤</option>
+            </select>
+          </div>
+          <div class="mlist" id="dogList" aria-live="polite"></div>
+        </div>
+        <div class="panel" id="catPanel">
+          <h3><svg aria-hidden="true"><use href="#i-cat"/></svg>집사 품앗이</h3>
+          <p class="small">여행이나 야근 때 서로의 고양이를 돌봐 주는 이웃, 사진을 나누는 온라인 모임을 연결합니다.</p>
+          <div class="mlist" id="catList"></div>
+        </div>
+      </div>
+    </div>
+    <div class="events">
+      <h3 style="margin-bottom:12px">다가오는 모임</h3>
+      <div class="tscroll">
+        <table class="tbl">
+          <thead><tr><th>날짜</th><th>모임</th><th>대상</th><th>장소</th><th>신청</th></tr></thead>
+          <tbody id="events"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="research" aria-labelledby="research-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="research-h">시장 전수조사</h2>
+      <p class="lead">국내외 반려동물 시장 규모, 보호자의 양육 실태, 기존 앱의 기능과 위치를 조사했습니다. 서로 다른 기관의 수치가 크게 엇갈리는 지점은 그대로 드러내고, 앱 설계에 주는 의미를 함께 적었습니다.</p>
+    </div>
+
+    <div class="status">
+      <h3>이 조사의 현재 단계</h3>
+      <p style="margin:0">지금 페이지의 경쟁 분석은 공개 자료와 앱 마켓 소개문을 바탕으로 한 1차 스크리닝 결과입니다. 국내 앱 마켓 전체를 대상으로 한 전수조사는 아래 절차로 설계했으며, 실제 수행 뒤 표와 포지셔닝 지도를 갱신합니다. 앱의 사용자 수처럼 확인되지 않은 수치는 싣지 않았습니다.</p>
+    </div>
+
+    <h3 style="margin-bottom:14px">전수조사 설계</h3>
+    <ol class="steps">
+      <li><div><b>모집단 목록 만들기</b><span>구글 플레이와 앱스토어 한국 마켓에서 강아지, 고양이, 반려동물, 펫, 산책, 집사, 동물병원 등 핵심어로 검색된 앱을 모두 수집합니다. 반려동물을 주 대상으로 하는지, 최근 12개월 안에 갱신되었는지를 포함 기준으로 둡니다.</span></div></li>
+      <li><div><b>코딩 프레임 확정</b><span>주 대상 종, 서비스 유형, 기능 약 40개 항목, 교류 기능의 형태, 수익 모델, 정보 검수 여부, 위치 정보 처리 방식을 변수로 정의하고 코딩북을 만듭니다.</span></div></li>
+      <li><div><b>독립 코딩과 신뢰도 검증</b><span>연구자 두 명이 각자 코딩한 뒤 Krippendorff 알파 0.80 이상을 기준으로 삼고, 기준 미달 항목은 정의를 고쳐 다시 코딩합니다.</span></div></li>
+      <li><div><b>리뷰 텍스트 분석</b><span>주요 앱의 이용자 리뷰를 수집해 토픽 모델링으로 불만과 기대를 분류합니다. 기존 앱이 놓친 욕구를 찾는 단계입니다.</span></div></li>
+      <li><div><b>반려가구 설문</b><span>온라인 패널에서 반려가구 1,200명을 개 보호자, 고양이 보호자, 둘 다 기르는 가구로 나누어 할당 표집합니다. 앱 이용 행태, 정보 신뢰, 교류 의향을 측정합니다.</span></div></li>
+      <li><div><b>기능 우선순위 측정</b><span>컨조인트 분석으로 기능 조합별 선호와 지불 의향을 추정하고, 개와 고양이 보호자의 차이를 비교합니다.</span></div></li>
+      <li><div><b>질적 보완</b><span>고양이 보호자와 노령 반려동물 보호자를 중심으로 심층면접과 2주 다이어리 연구를 진행합니다.</span></div></li>
+    </ol>
+
+    <h3 class="sub">국내 반려가구의 모습</h3>
+    <div class="two wide">
+      <div class="tscroll">
+        <table class="tbl" style="min-width:0">
+          <caption>KB경영연구소 2025 한국 반려동물 보고서 (2024년 말 기준)</caption>
+          <thead><tr><th>지표</th><th>값</th><th>앱에 주는 의미</th></tr></thead>
+          <tbody>
+            <tr><td>반려가구</td><td class="num">591만 가구 (26.7%)</td><td>전년 대비 1.1% 증가로 가구 수는 정체. 가입자 수보다 가구당 참여 깊이가 중요</td></tr>
+            <tr><td>반려인</td><td class="num">1,546만 명 (29.9%)</td><td>한 가구에 여러 보호자. 가족 공유 기능 필요</td></tr>
+            <tr><td>반려견과 반려묘</td><td class="num">546만, 217만 마리</td><td>반려견은 5년 만에 처음 감소, 반려묘는 1년 새 18만 마리 증가</td></tr>
+            <tr><td>월 양육비</td><td class="num">평균 19만 4천 원</td><td>지출 기록과 비교 기능의 수요</td></tr>
+            <tr><td>혼자 남는 경험</td><td class="num">80.1%, 하루 약 5시간 54분</td><td>이웃 돌봄 연결의 근거</td></tr>
+            <tr><td>반려동물보험 가입</td><td class="num">12.8%</td><td>보험 정보와 진료비 기록 제휴 여지</td></tr>
+            <tr><td>펫로스 경험</td><td class="num">54.7%</td><td>추모와 회복을 돕는 공간 필요</td></tr>
+            <tr><td>양육 만족도</td><td class="num">76.0%</td><td>자랑과 기록 욕구가 큰 이용자층</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figure class="figure" style="margin:0">
+        <svg viewBox="0 0 520 300" role="img" aria-label="기관별 반려견과 반려묘 추정치 비교 막대그래프. KB는 반려견 546만, 반려묘 217만. 농림축산식품부는 반려견 499만, 반려묘 277만.">
+          <g font-family="Gowun Dodum, sans-serif" font-size="13" fill="#1F3A2E">
+            <text x="0" y="22" font-family="Jua, sans-serif" font-size="16">KB경영연구소</text>
+            <text x="0" y="52">반려견</text>
+            <rect x="60" y="38" width="360" height="22" rx="6" fill="#F4C542"/>
+            <text x="428" y="54">546만</text>
+            <text x="0" y="86">반려묘</text>
+            <rect x="60" y="72" width="143" height="22" rx="6" fill="#9A86D6"/>
+            <text x="211" y="88">217만</text>
+            <text x="0" y="146" font-family="Jua, sans-serif" font-size="16">농림축산식품부 추정</text>
+            <text x="0" y="176">반려견</text>
+            <rect x="60" y="162" width="329" height="22" rx="6" fill="#F4C542"/>
+            <text x="397" y="178">499만</text>
+            <text x="0" y="210">반려묘</text>
+            <rect x="60" y="196" width="183" height="22" rx="6" fill="#9A86D6"/>
+            <text x="251" y="212">277만</text>
+            <text x="0" y="262" fill="#4A5F54">고양이 비중: KB 약 28%, 농림축산식품부 약 36%</text>
+            <text x="0" y="284" fill="#4A5F54">단위: 마리</text>
+          </g>
+        </svg>
+        <figcaption>같은 시기를 다룬 두 추정치에서 고양이 비중이 8%p 가까이 차이 납니다. 표본과 추정 방식의 차이로 보이며, 고양이 보호자의 규모는 자체 설문으로 다시 확인해야 합니다. 어느 쪽이든 고양이 보호자는 교류 서비스에서 소외되기엔 너무 큰 집단입니다.</figcaption>
+      </figure>
+    </div>
+
+    <h3 class="sub">시장 규모 추정</h3>
+    <div class="tscroll">
+      <table class="tbl">
+        <caption>기관마다 시장의 정의가 달라 수치를 직접 비교하기 어렵습니다. 반려동물 앱 시장 추정치는 두 배 이상 차이가 납니다.</caption>
+        <thead><tr><th>구분</th><th>규모</th><th>성장률</th><th>출처와 유의점</th></tr></thead>
+        <tbody>
+          <tr><td>글로벌 반려동물 케어 앱</td><td class="num">2025년 12억 달러, 2035년 20억 달러</td><td class="num">연 5.2%</td><td>OMR 보고서 요약. 앱 자체 매출 기준으로 좁게 정의</td></tr>
+          <tr><td>글로벌 반려동물 케어 앱 (다른 추정)</td><td class="num">2025년 약 28억 달러</td><td class="num">미제시</td><td>개발사 블로그의 2차 인용. 정의가 넓고 원출처 확인 필요</td></tr>
+          <tr><td>글로벌 펫케어 이커머스</td><td class="num">2030년 1,475.9억 달러</td><td class="num">연 7.8%</td><td>Grand View 계열 보고서 (ResearchAndMarkets 배포)</td></tr>
+          <tr><td>글로벌 산책 대행과 펫시팅</td><td class="num">2030년 약 51.4억 달러</td><td class="num">연 11.8%</td><td>개발사 블로그 인용. 교류와 돌봄 연결의 성장성 참고용</td></tr>
+          <tr><td>글로벌 반려동물 원격 상담 분류</td><td class="num">2026년 18.4억 달러, 2030년 35.4억 달러</td><td class="num">연 약 17.8%</td><td>The Business Research Company</td></tr>
+          <tr><td>미국 반려동물 산업 지출</td><td class="num">2024년 1,520억 달러</td><td class="num">꾸준한 증가</td><td>미국 반려동물제품협회(APPA)</td></tr>
+          <tr><td>국내 반려동물 연관산업</td><td class="num">2032년 20조 원 목표</td><td class="num">정책 목표</td><td>농림축산식품부 육성대책. 추정치가 아닌 목표치</td></tr>
+          <tr><td>국내 반려동물 스타트업</td><td class="num">최소 144곳</td><td class="num">2년 새 투자 유치 64곳 이상</td><td>블루포인트파트너스 발표. 보도 기준 집계라 실제보다 적을 수 있음</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">기존 앱 비교</h3>
+    <div class="tscroll">
+      <table class="tbl" style="min-width:900px">
+        <caption>공개된 앱 소개와 보도를 바탕으로 정리한 1차 스크리닝입니다. 교류 기능 평가는 연구자 판단이며 전수조사 코딩으로 검증할 예정입니다.</caption>
+        <thead><tr><th>서비스</th><th>유형</th><th>주 대상</th><th>확인된 핵심 기능</th><th>보호자 교류</th><th>멍냥마당에 주는 시사점</th></tr></thead>
+        <tbody>
+          <tr><td>펫프렌즈</td><td>커머스</td><td>개와 고양이</td><td>당일 및 새벽 배송, 24시간 상담, 동물등록 신청</td><td><span class="pill no">없음</span></td><td>반려동물 앱 MAU 1위로 소개됨. 거래에서는 정면 경쟁을 피함</td></tr>
+          <tr><td>어바웃펫</td><td>커머스</td><td>개와 고양이</td><td>용품 판매, 라이프스타일 플랫폼으로 확장 중</td><td><span class="pill tbd">확인 필요</span></td><td>최근 트래픽 감소 보도. 커머스만으로는 체류가 약할 수 있음</td></tr>
+          <tr><td>바잇미</td><td>브랜드 커머스</td><td>개와 고양이</td><td>자체 브랜드 상품, CRM 고도화</td><td><span class="pill tbd">확인 필요</span></td><td>브랜드 제휴 파트너 후보</td></tr>
+          <tr><td>비마이펫</td><td>지식정보</td><td>개와 고양이</td><td>2만 건 이상의 양육 콘텐츠, 질문 커뮤니티, 탐색형 쇼핑</td><td><span class="pill yes">있음</span></td><td>정보와 커뮤니티를 결합한 가장 가까운 선례. 동네 기반과 검수 표시로 차별화</td></tr>
+          <tr><td>핏펫</td><td>헬스케어</td><td>개와 고양이</td><td>동물병원 예약과 적립, 가정용 소변 검사 키트, 영수증 리뷰</td><td><span class="pill part">부분</span></td><td>건강 기록 연동 제휴 후보</td></tr>
+          <tr><td>반려생활</td><td>여행과 장소</td><td>개 중심</td><td>동반 장소 검색, 숙소 예약, 이용 후기</td><td><span class="pill part">부분</span></td><td>장소 데이터는 직접 구축보다 제휴가 효율적</td></tr>
+          <tr><td>멍콕</td><td>산책과 장소</td><td>개</td><td>추천 산책 코스, 전국 약 3만 곳 동반 장소, 산책 랭킹</td><td><span class="pill part">부분</span></td><td>산책 기록과 게임 요소는 기본 기대치가 됨</td></tr>
+          <tr><td>펫피</td><td>산책 리워드</td><td>개</td><td>산책 포인트 적립, 용품 교환</td><td><span class="pill part">부분</span></td><td>보상형 참여 설계 참고. 보상 의존은 경계</td></tr>
+          <tr><td>펫썸</td><td>산책 매칭</td><td>개</td><td>근처 산책 중인 반려동물 확인, 팔로우, 중고거래, 산책 다이어리</td><td><span class="pill yes">있음</span></td><td>교류 기능의 직접 경쟁자. 고양이 쪽은 비어 있음</td></tr>
+          <tr><td>펫포인트</td><td>지역 SNS</td><td>개와 고양이</td><td>여러 마리 계정 관리, 종과 거리로 친구 찾기</td><td><span class="pill yes">있음</span></td><td>다견 다묘 가구 관리의 선례</td></tr>
+          <tr><td>펫패스</td><td>산책 커뮤니티</td><td>개</td><td>동네 산책, 이웃 연결</td><td><span class="pill yes">있음</span></td><td>평가 수가 적은 초기 서비스. 이 영역의 신규 진입이 활발함</td></tr>
+          <tr><td>비포펫</td><td>돌봄 연결</td><td>개</td><td>산책 대행, 7단계 도우미 검증, 실시간 위치와 리포트</td><td><span class="pill no">없음</span></td><td>이웃 돌봄을 연결할 때의 신뢰 검증 기준으로 참고</td></tr>
+          <tr><td>펫핀스</td><td>금융</td><td>개와 고양이</td><td>반려동물보험과 카드 비교</td><td><span class="pill no">없음</span></td><td>보험 정보 제휴 후보</td></tr>
+          <tr><td>Rover (미국)</td><td>돌봄 마켓</td><td>개와 고양이</td><td>펫시터와 산책 도우미 연결. 2024년 블랙스톤이 23억 달러에 인수</td><td><span class="pill part">부분</span></td><td>돌봄 연결 시장의 가치가 입증됨</td></tr>
+          <tr><td>Chewy (미국)</td><td>커머스와 원격 상담</td><td>개와 고양이</td><td>수의사 원격 상담 누적 100만 건</td><td><span class="pill no">없음</span></td><td>정보 신뢰가 곧 거래로 이어진다는 근거</td></tr>
+          <tr class="me"><td><b>멍냥마당 (제안)</b></td><td>정보와 교류 포털</td><td>개와 고양이 균형</td><td>검수된 정보, 통합 프로필, 동네 마당, 산책 친구, 집사 품앗이</td><td><span class="pill yes">핵심</span></td><td>정보에서 교류로, 교류에서 제휴 서비스로 이어지는 구조</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">포지셔닝 지도</h3>
+    <div class="two wide">
+      <figure class="figure" style="margin:0">
+        <svg viewBox="0 0 560 400" role="img" aria-label="가로축은 정보와 교류 중심에서 거래와 서비스 중심, 세로축은 개와 고양이 균형에서 개 중심. 교류 앱은 대부분 아래 왼쪽 개 중심에 몰려 있고, 왼쪽 위 정보와 교류 중심이면서 개와 고양이 균형인 영역은 비마이펫 외에 비어 있다. 멍냥마당은 이 영역을 목표로 한다.">
+          <rect x="60" y="30" width="460" height="320" rx="14" fill="#F7F9F5" stroke="#CFD9D1"/>
+          <rect x="62" y="32" width="200" height="120" rx="12" fill="#FCEFC4" opacity=".6"/>
+          <line x1="290" y1="30" x2="290" y2="350" stroke="#CFD9D1" stroke-dasharray="4 5"/>
+          <line x1="60" y1="190" x2="520" y2="190" stroke="#CFD9D1" stroke-dasharray="4 5"/>
+          <g font-family="Gowun Dodum, sans-serif" font-size="13" fill="#4A5F54">
+            <text x="60" y="372">정보와 교류 중심</text>
+            <text x="520" y="372" text-anchor="end">거래와 서비스 중심</text>
+            <text x="50" y="44" text-anchor="end" transform="rotate(-90 50 44)" dx="-4">개와 고양이 균형</text>
+            <text x="50" y="350" text-anchor="start" transform="rotate(-90 50 350)">개 중심</text>
+          </g>
+          <g font-family="Gowun Dodum, sans-serif" font-size="14" fill="#1F3A2E">
+            <circle cx="152" cy="110" r="7" fill="#3F8A5F"/><text x="140" y="130" text-anchor="end">비마이펫</text>
+            <circle cx="175" cy="174" r="7" fill="#3F8A5F"/><text x="186" y="178">펫포인트</text>
+            <circle cx="198" cy="282" r="7" fill="#3F8A5F"/><text x="208" y="278">펫썸</text>
+            <circle cx="224" cy="304" r="7" fill="#3F8A5F"/><text x="234" y="308">펫피</text>
+            <circle cx="250" cy="266" r="7" fill="#3F8A5F"/><text x="260" y="262">멍콕</text>
+            <circle cx="182" cy="316" r="7" fill="#3F8A5F"/><text x="170" y="320" text-anchor="end">펫패스</text>
+            <circle cx="336" cy="238" r="7" fill="#3F8A5F"/><text x="346" y="242">반려생활</text>
+            <circle cx="382" cy="142" r="7" fill="#3F8A5F"/><text x="382" y="166" text-anchor="middle">핏펫</text>
+            <circle cx="437" cy="312" r="7" fill="#3F8A5F"/><text x="447" y="316">비포펫</text>
+            <circle cx="470" cy="96" r="7" fill="#3F8A5F"/><text x="466" y="82" text-anchor="middle">펫프렌즈</text>
+            <circle cx="446" cy="126" r="7" fill="#3F8A5F"/><text x="436" y="130" text-anchor="end">어바웃펫</text>
+          </g>
+          <circle cx="178" cy="66" r="11" fill="#1F3A2E"/>
+          <text x="196" y="71" font-family="Jua, sans-serif" font-size="16" fill="#1F3A2E">멍냥마당</text>
+        </svg>
+        <figcaption>위치는 연구자의 정성 판단이며 전수조사 코딩 결과로 다시 그립니다. 노란 영역이 목표 자리입니다.</figcaption>
+      </figure>
+      <div>
+        <p>교류 기능을 가진 앱은 대부분 개 산책을 중심으로 아래 왼쪽에 몰려 있습니다. 큰 앱들은 오른쪽의 거래와 서비스 쪽에 자리 잡고 있습니다.</p>
+        <p>정보와 교류를 중심에 두면서 개와 고양이를 똑같이 다루는 왼쪽 위는 비마이펫 정도만 가까이 있고, 그마저 동네 기반 교류는 약합니다. 멍냥마당은 이 자리를 목표로 합니다.</p>
+        <p class="small">해석상 유의점: 앱의 교류 기능이 있다는 것과 실제로 교류가 활발하다는 것은 다른 문제입니다. 전수조사에서는 기능 유무와 함께 리뷰에 나타난 활동 수준을 따로 측정합니다.</p>
+      </div>
+    </div>
+
+    <h3 class="sub">조사에서 찾은 빈틈</h3>
+    <div class="gaps">
+      <div class="gap cat"><h3>고양이 보호자의 교류가 비어 있습니다</h3><p>교류 앱은 산책을 전제로 만들어져 있습니다. 반려묘는 1년 새 18만 마리가 늘었지만, 집 안에서 지내는 고양이에 맞는 교류 방식은 거의 없습니다.</p></div>
+      <div class="gap"><h3>정보, 기록, 교류, 예약이 흩어져 있습니다</h3><p>보호자는 목적마다 다른 앱을 씁니다. 하나의 반려동물 프로필이 모든 기능의 중심이 되면 옮겨 다닐 이유가 줄어듭니다.</p></div>
+      <div class="gap"><h3>정보를 믿을 근거가 잘 보이지 않습니다</h3><p>전문가 글과 이용자 답변이 섞여 있어 구분이 어렵습니다. 누가 언제 검수했는지를 보여 주는 것만으로도 차별점이 됩니다.</p></div>
+      <div class="gap dog"><h3>혼자 있는 시간을 채울 방법이 부족합니다</h3><p>반려동물 80.1%가 혼자 남는 경험을 하고, 평균 약 6시간을 홀로 보냅니다. 가까운 이웃끼리 돌봄을 나누는 구조가 필요합니다.</p></div>
+      <div class="gap"><h3>이별 이후를 위한 공간이 없습니다</h3><p>반려가구의 절반 이상이 펫로스를 겪었고, 그중 대다수가 상실감을 느꼈습니다. 추모와 회복을 돕는 공간은 기존 앱에서 거의 찾기 어렵습니다.</p></div>
+      <div class="gap"><h3>비용에 대한 불안이 큽니다</h3><p>보험 가입률은 12.8%에 머물고 치료비 지출은 늘고 있습니다. 진료비 기록과 비교, 보험 정보는 신뢰를 쌓은 뒤 연결할 수 있는 영역입니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec dark" id="proposal" aria-labelledby="proposal-h">
+  <div class="wrap">
+    <h2 id="proposal-h" style="color:#fff">개발 제안</h2>
+    <p class="statement">멍냥마당은 개와 고양이를 똑같이 대접하는 동네 기반 반려생활 포털입니다. 검수된 정보로 시작해 이웃과의 교류로 이어지고, 필요한 서비스는 제휴로 연결합니다.</p>
+    <div class="principles">
+      <div><h3>정보가 먼저, 거래는 나중</h3><p>커머스 강자와 배송 경쟁을 하지 않습니다. 매일 열어 볼 이유를 정보와 기록, 교류에서 만들고 거래는 제휴로 붙입니다.</p></div>
+      <div><h3>고양이는 고양이답게</h3><p>산책 매칭을 고양이에게 억지로 적용하지 않습니다. 탁묘 품앗이, 다묘 기록, 온라인 사진 모임처럼 집사에게 맞는 교류를 따로 설계합니다.</p></div>
+      <div><h3>동네는 가깝게, 위치는 흐리게</h3><p>이웃을 만나게 하되 집 위치는 드러내지 않습니다. 동네 단위로만 보여 주고, 만남은 공개된 장소에서 이루어지도록 안내합니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="road-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="road-h">단계별 개발 계획</h2>
+      <p class="lead">교류 서비스는 이용자가 적으면 빈 마당이 됩니다. 처음에는 두세 개 동네처럼 좁은 지역에서 밀도를 먼저 만들고, 정보 허브로 전국 유입을 받는 방식을 권합니다.</p>
+    </div>
+    <div class="timeline">
+      <div class="phase">
+        <h3>1단계 최소 기능 출시</h3>
+        <div class="when">착수 후 0~6개월</div>
+        <ol>
+          <li>반려동물 프로필과 건강 수첩 (가족 공유)</li>
+          <li>수의사 검수 정보 허브</li>
+          <li>동네 마당 피드</li>
+          <li>산책 친구 찾기</li>
+          <li>집사 품앗이</li>
+        </ol>
+      </div>
+      <div class="phase">
+        <h3>2단계 신뢰와 편의</h3>
+        <div class="when">6~12개월</div>
+        <ol>
+          <li>수의사 질문과 답변</li>
+          <li>동반 장소 지도 (데이터 제휴)</li>
+          <li>진료비 기록과 지역별 비교</li>
+          <li>무지개다리 추모 공간과 상담 연결</li>
+          <li>동네 모임 개설과 신청</li>
+        </ol>
+      </div>
+      <div class="phase">
+        <h3>3단계 서비스 연결</h3>
+        <div class="when">12~24개월</div>
+        <ol>
+          <li>검증된 이웃 돌봄 연결</li>
+          <li>병원, 미용, 숙소 예약 제휴</li>
+          <li>보험 정보와 커머스 제휴</li>
+          <li>증상 안내 도우미 (진단이 아닌 병원 방문 판단 보조)</li>
+        </ol>
+      </div>
+    </div>
+
+    <h3 class="sub">기능 우선순위와 근거</h3>
+    <div class="tscroll">
+      <table class="tbl">
+        <thead><tr><th>기능</th><th>해결하는 문제</th><th>단계</th><th>조사 근거</th></tr></thead>
+        <tbody>
+          <tr><td>통합 반려동물 프로필</td><td>앱마다 흩어진 기록</td><td>1</td><td>정보, 기록, 교류, 예약의 분절</td></tr>
+          <tr><td>검수 표시 정보 허브</td><td>정보 신뢰</td><td>1</td><td>전문가 글과 이용자 답변의 혼재</td></tr>
+          <tr><td>산책 친구 찾기</td><td>반려견 사회화와 운동</td><td>1</td><td>교류 앱의 기본 기대 기능</td></tr>
+          <tr><td>집사 품앗이</td><td>고양이 교류 공백, 혼자 있는 시간</td><td>1</td><td>반려묘 증가, 80.1% 혼자 남는 경험</td></tr>
+          <tr><td>진료비 기록과 비교</td><td>비용 불안</td><td>2</td><td>치료비 증가, 보험 가입률 12.8%</td></tr>
+          <tr><td>추모 공간</td><td>펫로스 이후 고립</td><td>2</td><td>반려가구 54.7%가 펫로스 경험</td></tr>
+          <tr><td>이웃 돌봄 연결</td><td>외출과 출장 시 돌봄</td><td>3</td><td>산책 대행과 펫시팅 시장의 빠른 성장</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">수익 모델</h3>
+    <div class="tscroll">
+      <table class="tbl">
+        <thead><tr><th>수익원</th><th>방식</th><th>시점</th><th>유의점</th></tr></thead>
+        <tbody>
+          <tr><td>동네 업체 광고</td><td>동물병원, 미용실, 카페의 지역 노출</td><td>1단계 후반</td><td>정보 카드와 광고를 명확히 구분 표시</td></tr>
+          <tr><td>예약 제휴 수수료</td><td>병원, 미용, 숙소 예약 연결</td><td>3단계</td><td>검수 정보와 이해관계가 섞이지 않도록 편집 원칙 공개</td></tr>
+          <tr><td>프리미엄 구독</td><td>가족 공유 확대, 건강 기록 내보내기, 여러 마리 관리</td><td>2단계</td><td>기본 정보와 교류는 계속 무료</td></tr>
+          <tr><td>보험과 커머스 제휴</td><td>상품 비교와 연결</td><td>3단계</td><td>추천 기준과 제휴 여부 공개</td></tr>
+          <tr><td>익명 통계 보고서</td><td>지역별 양육 트렌드를 기관과 업계에 제공</td><td>3단계</td><td>명시적 동의, 집계 단위 공개, 개인 식별 불가 수준 유지</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">성과 지표</h3>
+    <div class="tscroll">
+      <table class="tbl">
+        <thead><tr><th>지표</th><th>정의</th><th>1년 목표 (가설)</th></tr></thead>
+        <tbody>
+          <tr><td>핵심 지표</td><td>한 주에 교류 활동(글, 댓글, 인사, 모임 신청)을 한 반려가구 수</td><td>활성 가구의 40% 이상</td></tr>
+          <tr><td>30일 재방문율</td><td>가입 30일 뒤에도 방문하는 비율</td><td>30% 이상</td></tr>
+          <tr><td>고양이 보호자 비중</td><td>전체 활성 가구 중 고양이 보호자</td><td>35% 이상</td></tr>
+          <tr><td>산책 친구 성사율</td><td>보낸 인사 중 실제 약속으로 이어진 비율</td><td>15% 이상</td></tr>
+          <tr><td>정보 신뢰도</td><td>정보 카드 평가 설문의 신뢰 척도 평균 (5점)</td><td>4.2 이상</td></tr>
+          <tr><td>사용성</td><td>SUS 점수</td><td>75점 이상</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">위험 요인과 대응</h3>
+    <div class="tscroll">
+      <table class="tbl">
+        <thead><tr><th>위험</th><th>대응</th></tr></thead>
+        <tbody>
+          <tr><td>초기 이용자가 적어 마당이 비어 보임</td><td>좁은 지역에서 시작, 동네 동물병원과 공동 오프라인 모임, 정보 허브로 먼저 유입</td></tr>
+          <tr><td>큰 커머스 앱이 교류 기능을 추가</td><td>고양이 교류와 검수 정보라는 쉽게 따라 하기 어려운 영역에 집중</td></tr>
+          <tr><td>위치 정보 노출과 안전 문제</td><td>동네 단위 표시, 실시간 위치 공유는 서로 동의한 경우만, 신고와 차단 기능</td></tr>
+          <tr><td>잘못된 건강 정보 확산</td><td>건강 관련 글에 검수 여부 표시, 응급 증상 글에 병원 안내 자동 표시</td></tr>
+          <tr><td>모임 중 물림 사고와 갈등</td><td>성향과 사회성 표시, 모임 안전 수칙 동의, 배상책임보험 안내</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer id="sources">
+  <div class="wrap">
+    <h2>출처</h2>
+    <p>수치는 아래 공개 자료에서 확인했으며, 2026년 9월 기준 공개 자료를 바탕으로 합니다. 유료 보고서는 공개 요약본만 참고했습니다.</p>
+    <ol>
+      <li><a href="https://www.dailyvet.co.kr/?p=250412" rel="noopener" target="_blank">데일리벳, KB 2025 한국 반려동물 보고서 보도</a></li>
+      <li><a href="https://kbthink.com/investment/deepdive/research/250629-1.html" rel="noopener" target="_blank">KB Think, 2025 한국 반려동물 보고서 미리보기</a></li>
+      <li><a href="https://v.daum.net/v/20250629090201096" rel="noopener" target="_blank">뉴시스, 반려동물 양육비와 치료비 보도</a></li>
+      <li><a href="https://www.dailyvet.co.kr/?p=239355" rel="noopener" target="_blank">데일리벳, 농림축산식품부 반려견과 반려묘 추정 보도</a></li>
+      <li><a href="https://www.dailyvet.co.kr/?p=215350" rel="noopener" target="_blank">데일리벳, 반려동물 연관산업 육성대책 보도</a></li>
+      <li><a href="https://www.dailyvet.co.kr/print?id=176444" rel="noopener" target="_blank">데일리벳, 국내 반려동물 스타트업 현황 보도</a></li>
+      <li><a href="https://cn.gii.tw/report/omr1882950-global-pet-care-apps-market.html" rel="noopener" target="_blank">GII, 글로벌 반려동물 케어 앱 시장 (OMR)</a></li>
+      <li><a href="https://www.biz4group.com/blog/develop-pet-care-app-like-rover" rel="noopener" target="_blank">Biz4Group, 반려동물 케어 앱 시장 인용</a></li>
+      <li><a href="https://www.businesswire.com/news/home/20241129300562/en/" rel="noopener" target="_blank">Business Wire, 펫케어 이커머스 시장 보고서</a></li>
+      <li><a href="https://www.apptunix.com/blog/how-to-build-a-dog-walking-app/" rel="noopener" target="_blank">Apptunix, 산책 대행과 펫시팅 시장 인용</a></li>
+      <li><a href="https://giikorea.co.kr/report/tbrc2082225-pet-teletriage-services-global-market-report.html" rel="noopener" target="_blank">GII, 반려동물 원격 상담 분류 시장 (TBRC)</a></li>
+      <li><a href="https://www.bolsamania.com/nota-de-prensa_amp/mercados/global-pet-care-market-to-double-surpassing-usd-483-billion-by-2035-as-pet-humanization-reshapes-global-economy--21576356.html" rel="noopener" target="_blank">Future Market Insights, Chewy 원격 상담 사례</a></li>
+      <li><a href="https://www.innoforest.co.kr/report/NS00000126" rel="noopener" target="_blank">혁신의숲, 펫프렌즈 어바웃펫 바잇미 성장 분석</a></li>
+      <li><a href="https://www.innoforest.co.kr/company/CP00000159/펫프렌즈" rel="noopener" target="_blank">혁신의숲, 펫프렌즈 기업 정보</a></li>
+      <li>앱스토어 소개 페이지: 펫프렌즈, 비마이펫, 핏펫, 반려생활, 멍콕, 펫피, 펫썸, 펫포인트, 펫패스, 비포펫</li>
+      <li><a href="https://www.dailyvet.co.kr/?p=134117" rel="noopener" target="_blank">데일리벳, 펫핀스 앱 공개 보도</a></li>
+    </ol>
+    <div class="credit">
+      <div><b>기획 및 제작 로젠버그 박사</b><br>멍냥마당은 가칭이며, 이 페이지는 기획 시안입니다.</div>
+      <div>시안 작성 2026년 9월</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var state = { sp:'all', cat:'전체', q:'' };
+
+  var INFO = [
+    {sp:'dog', cat:'먹거리', t:'강아지에게 주면 안 되는 음식', b:'초콜릿, 포도와 건포도, 양파와 마늘, 자일리톨이 든 껌과 과자는 적은 양으로도 중독을 일으킬 수 있습니다. 먹은 것이 의심되면 먹은 양과 시간을 적어 바로 동물병원에 연락하세요.'},
+    {sp:'dog', cat:'산책', t:'여름 산책 전 7초 손등 확인', b:'아스팔트에 손등을 7초 대었을 때 뜨겁다면 발바닥 화상 위험이 있습니다. 한낮을 피하고 이른 아침이나 해 진 뒤 그늘진 길을 고르세요.'},
+    {sp:'dog', cat:'제도', t:'반려견 동물등록은 의무입니다', b:'집에서 기르는 생후 2개월 이상의 개는 시군구에 등록해야 합니다. 잃어버렸을 때는 몸속에 넣는 내장형 칩이 가장 확실합니다.'},
+    {sp:'dog', cat:'행동', t:'사회화는 어릴 때가 결정적입니다', b:'생후 약 3주에서 14주 사이에 사람, 소리, 다른 개를 좋은 기억으로 경험하면 겁과 공격성이 줄어듭니다. 예방접종 일정에 맞춰 수의사와 범위를 정하세요.'},
+    {sp:'dog', cat:'건강', t:'매일 양치가 치과 치료를 줄입니다', b:'반려견용 치약과 칫솔로 하루 한 번 양치하면 치석과 잇몸병 예방에 도움이 됩니다. 처음에는 입 주변을 만지는 연습부터 시작하세요.'},
+    {sp:'cat', cat:'먹거리', t:'백합은 고양이에게 치명적입니다', b:'백합과 식물은 꽃가루나 꽃병 물만으로도 급성 신부전을 일으킬 수 있습니다. 꽃다발을 집에 들일 때는 꽃의 종류를 꼭 확인하세요.'},
+    {sp:'cat', cat:'건강', t:'물을 더 마시게 하는 방법', b:'고양이는 갈증을 늦게 느끼는 편입니다. 넓고 얕은 그릇, 흐르는 물이 나오는 급수기, 습식 사료를 함께 쓰면 마시는 물의 양을 늘리는 데 도움이 됩니다.'},
+    {sp:'cat', cat:'생활', t:'화장실은 고양이 수보다 하나 더', b:'두 마리라면 세 개를 권합니다. 조용하고 밥그릇과 떨어진 곳에 두고 매일 치워 주세요.'},
+    {sp:'cat', cat:'행동', t:'숨기와 과한 그루밍은 스트레스 신호', b:'이사, 새 가족, 소음 뒤에 평소보다 오래 숨거나 한 부위를 계속 핥는다면 환경을 점검하세요. 며칠 넘게 이어지면 진료를 받아 보세요.'},
+    {sp:'cat', cat:'제도', t:'고양이 등록은 선택 사항입니다', b:'고양이 동물등록은 현재 의무가 아니지만 원하면 등록할 수 있습니다. 운영 방식은 지역마다 다를 수 있으니 시군구에 확인하세요.'},
+    {sp:'all', cat:'건강', t:'비만 확인: 갈비뼈가 만져지나요', b:'옆구리를 가볍게 쓸었을 때 갈비뼈가 만져지고 위에서 볼 때 허리선이 보이면 알맞은 체형입니다. 체중은 한 달에 한 번 기록해 두세요.'},
+    {sp:'all', cat:'생활', t:'혼자 있는 시간을 덜 지루하게', b:'노즈워크 매트, 퍼즐 급식기, 창가 자리, 캣타워처럼 스스로 탐색할 거리를 두면 혼자 있을 때의 스트레스를 줄이는 데 도움이 됩니다.'},
+    {sp:'all', cat:'이별', t:'펫로스, 슬퍼해도 괜찮습니다', b:'충분히 슬퍼하는 시간은 자연스러운 회복 과정입니다. 일상이 오래 무너진다면 전문 상담을 받아 보세요.'},
+    {sp:'all', cat:'입양', t:'입양 전에 가족과 정할 네 가지', b:'누가 주로 돌볼지, 한 달 양육비를 얼마로 잡을지, 여행이나 출장 때 누구에게 맡길지, 알레르기가 있는 가족은 없는지 먼저 이야기하세요.'}
+  ];
+
+  var FEED = [
+    {sp:'dog', who:'보리', meta:'말티즈, 4살', ago:'12분 전', t:'오늘 아침 하천 산책로에서 처음으로 대형견 친구랑 인사했어요. 꼬리 흔드는 거 보고 울컥했습니다.', likes:24},
+    {sp:'cat', who:'두부', meta:'코리안 숏헤어, 2살', ago:'40분 전', t:'다음 주 사흘 출장인데 저녁에 밥이랑 화장실 봐 주실 이웃 집사님 계실까요? 저도 다음에 꼭 갚을게요.', likes:17},
+    {sp:'dog', who:'콩떡', meta:'진돗개 믹스, 7살', ago:'1시간 전', t:'노견이라 천천히 걷는데 같이 느리게 걸어 줄 친구 구해요. 저녁 7시쯤 공원 한 바퀴 돌아요.', likes:31},
+    {sp:'cat', who:'나비와 호두', meta:'두 마리 집사', ago:'3시간 전', t:'화장실 세 개로 늘렸더니 호두가 더 이상 이불에 실수를 안 해요. 정보 카드 보고 따라 했습니다.', likes:42},
+    {sp:'dog', who:'망고', meta:'웰시코기, 1살', ago:'어제', t:'퍼피 사회화 모임 다녀왔어요. 처음엔 숨더니 마지막엔 제일 신나게 뛰었어요.', likes:56}
+  ];
+
+  var DOGS = [
+    {n:'콩이', br:'푸들', size:'소형', time:'아침', tem:'차분하고 사람을 좋아해요'},
+    {n:'루이', br:'골든 리트리버', size:'대형', time:'저녁', tem:'활발하고 공놀이를 좋아해요'},
+    {n:'밤비', br:'시바견', size:'중형', time:'밤', tem:'처음엔 낯을 가려요'},
+    {n:'솜이', br:'비숑', size:'소형', time:'저녁', tem:'다른 소형견과 잘 놀아요'},
+    {n:'대장', br:'진돗개', size:'중형', time:'아침', tem:'천천히 걷는 걸 좋아해요'},
+    {n:'코코', br:'보더콜리', size:'중형', time:'저녁', tem:'오래 걷고 뛰는 걸 좋아해요'},
+    {n:'하루', br:'래브라도', size:'대형', time:'아침', tem:'순하고 어린 개에게 너그러워요'}
+  ];
+
+  var CATS = [
+    {n:'탁묘 품앗이 짝꿍', d:'같은 동네 집사끼리 출장, 여행 때 서로 밥과 화장실 챙기기', btn:'짝꿍 신청'},
+    {n:'노묘 집사 모임', d:'열 살 넘은 고양이의 식이와 병원 경험 나누기, 매달 둘째 주 온라인', btn:'참여 신청'},
+    {n:'다묘 가정 생활 연구회', d:'여러 마리 합사, 화장실, 급식 요령 공유', btn:'참여 신청'},
+    {n:'창가 사진전', d:'우리 고양이 창가 사진을 모아 한 달에 한 번 온라인 전시', btn:'사진 내기'}
+  ];
+
+  var EVENTS = [
+    {d:'9월 19일 (토)', n:'퍼피 사회화 놀이 시간', sp:'dog', who:'생후 6개월 이하 강아지', where:'동네 공원 잔디마당'},
+    {d:'9월 24일 (목)', n:'노견과 느린 저녁 산책', sp:'dog', who:'8살 이상 반려견', where:'하천 산책로 입구'},
+    {d:'9월 26일 (토)', n:'처음 집사 오리엔테이션', sp:'cat', who:'입양 1년 이내 고양이 보호자', where:'온라인'},
+    {d:'10월 3일 (토)', n:'동물병원과 함께하는 응급처치 교실', sp:'all', who:'모든 보호자', where:'동네 동물병원 세미나실'},
+    {d:'10월 10일 (토)', n:'무지개다리 추모 모임', sp:'all', who:'반려동물을 떠나보낸 보호자', where:'온라인'}
+  ];
+
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function spOk(sp){ return state.sp === 'all' || sp === 'all' || sp === state.sp; }
+  function spChip(sp){
+    if (sp === 'dog') return '<span class="chip dog">강아지</span>';
+    if (sp === 'cat') return '<span class="chip cat">고양이</span>';
+    return '<span class="chip">개와 고양이</span>';
+  }
+  function icon(sp){ return '<svg aria-hidden="true"><use href="#i-' + (sp === 'cat' ? 'cat' : 'dog') + '"/></svg>'; }
+
+  /* 분류 버튼 */
+  var catBox = document.getElementById('cats');
+  var catNames = ['전체'];
+  INFO.forEach(function(i){ if (catNames.indexOf(i.cat) < 0) catNames.push(i.cat); });
+  catBox.innerHTML = catNames.map(function(c){
+    return '<button type="button" data-cat="' + esc(c) + '" aria-pressed="' + (c === '전체') + '">' + esc(c) + '</button>';
+  }).join('');
+  catBox.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    state.cat = b.getAttribute('data-cat');
+    catBox.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    renderInfo();
+  });
+
+  document.getElementById('q').addEventListener('input', function(e){ state.q = e.target.value.trim(); renderInfo(); });
+
+  function renderInfo(){
+    var list = INFO.filter(function(i){
+      var okCat = state.cat === '전체' || i.cat === state.cat;
+      var okQ = !state.q || (i.t + ' ' + i.b + ' ' + i.cat).indexOf(state.q) > -1;
+      return spOk(i.sp) && okCat && okQ;
+    });
+    var grid = document.getElementById('infoGrid');
+    if (!list.length){
+      grid.innerHTML = '<div class="empty">찾는 내용과 맞는 정보가 없습니다. 다른 단어로 검색하거나 분류를 전체로 바꿔 보세요.</div>';
+      return;
+    }
+    grid.innerHTML = list.map(function(i){
+      return '<article class="card" data-sp="' + i.sp + '">' +
+        '<div class="chips">' + spChip(i.sp) + '<span class="chip">' + esc(i.cat) + '</span></div>' +
+        '<h3>' + esc(i.t) + '</h3><p>' + esc(i.b) + '</p>' +
+        '<div class="foot">시안용 예시, 출시 전 수의사 검수 예정</div></article>';
+    }).join('');
+  }
+
+  function renderFeed(){
+    var box = document.getElementById('feed');
+    var list = FEED.filter(function(p){ return spOk(p.sp); });
+    if (!list.length){
+      box.innerHTML = '<div class="post"><div></div><p class="small">아직 이 마당에 글이 없습니다. 첫 이야기를 남겨 보세요.</p></div>';
+      return;
+    }
+    box.innerHTML = list.map(function(p){
+      var idx = FEED.indexOf(p);
+      return '<article class="post">' +
+        '<div class="avatar">' + icon(p.sp) + '</div>' +
+        '<div><div class="who">' + esc(p.who) + '<span class="meta">' + esc(p.meta) + ', ' + esc(p.ago) + '</span></div>' +
+        '<p>' + esc(p.t) + '</p>' +
+        '<button type="button" class="like" data-i="' + idx + '" aria-pressed="' + (p.liked ? 'true' : 'false') + '">좋아요 ' + (p.likes + (p.liked ? 1 : 0)) + '</button>' +
+        '</div></article>';
+    }).join('');
+  }
+  document.getElementById('feed').addEventListener('click', function(e){
+    var b = e.target.closest('.like'); if (!b) return;
+    var p = FEED[+b.getAttribute('data-i')];
+    p.liked = !p.liked;
+    renderFeed();
+  });
+
+  document.getElementById('postBtn').addEventListener('click', function(){
+    var ta = document.getElementById('postText');
+    var msg = document.getElementById('postMsg');
+    var txt = ta.value.trim();
+    if (!txt){ msg.textContent = '내용을 입력하면 게시할 수 있습니다.'; ta.focus(); return; }
+    var sp = document.getElementById('postSp').value;
+    FEED.unshift({sp:sp, who:'나', meta: sp === 'cat' ? '고양이 보호자' : '강아지 보호자', ago:'방금', t:txt, likes:0});
+    ta.value = '';
+    msg.textContent = '';
+    if (!spOk(sp)) setSpecies('all');
+    renderFeed();
+  });
+
+  function renderDogs(){
+    var size = document.getElementById('mSize').value;
+    var time = document.getElementById('mTime').value;
+    var list = DOGS.filter(function(d){ return (size === 'all' || d.size === size) && (time === 'all' || d.time === time); });
+    var box = document.getElementById('dogList');
+    if (!list.length){
+      box.innerHTML = '<p class="small">조건에 맞는 친구가 아직 없습니다. 시간대를 전체로 바꾸거나 동네 마당에 산책 모집 글을 올려 보세요.</p>';
+      return;
+    }
+    box.innerHTML = list.map(function(d){
+      var idx = DOGS.indexOf(d);
+      return '<div class="mitem"><div><b>' + esc(d.n) + '</b><span>' + esc(d.br) + ', ' + esc(d.size) + '견, ' + esc(d.time) + ' 산책. ' + esc(d.tem) + '</span></div>' +
+        '<button type="button" class="sbtn line" data-d="' + idx + '" aria-pressed="' + (d.sent ? 'true' : 'false') + '">' + (d.sent ? '인사를 보냈어요' : '인사하기') + '</button></div>';
+    }).join('');
+  }
+  document.getElementById('mSize').addEventListener('change', renderDogs);
+  document.getElementById('mTime').addEventListener('change', renderDogs);
+  document.getElementById('dogList').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    var d = DOGS[+b.getAttribute('data-d')]; d.sent = !d.sent; renderDogs();
+  });
+
+  function renderCats(){
+    document.getElementById('catList').innerHTML = CATS.map(function(c, i){
+      return '<div class="mitem"><div><b>' + esc(c.n) + '</b><span>' + esc(c.d) + '</span></div>' +
+        '<button type="button" class="sbtn line" data-c="' + i + '" aria-pressed="' + (c.on ? 'true' : 'false') + '">' + (c.on ? '신청했어요' : esc(c.btn)) + '</button></div>';
+    }).join('');
+  }
+  document.getElementById('catList').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    var c = CATS[+b.getAttribute('data-c')]; c.on = !c.on; renderCats();
+  });
+
+  function renderEvents(){
+    var rows = EVENTS.filter(function(v){ return spOk(v.sp); });
+    document.getElementById('events').innerHTML = rows.map(function(v){
+      var idx = EVENTS.indexOf(v);
+      return '<tr><td class="num">' + esc(v.d) + '</td><td>' + esc(v.n) + '</td><td>' + spChip(v.sp) + ' ' + esc(v.who) + '</td><td>' + esc(v.where) + '</td>' +
+        '<td><button type="button" class="sbtn line" data-e="' + idx + '" aria-pressed="' + (v.on ? 'true' : 'false') + '">' + (v.on ? '신청 완료' : '신청하기') + '</button></td></tr>';
+    }).join('');
+  }
+  document.getElementById('events').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    var v = EVENTS[+b.getAttribute('data-e')]; v.on = !v.on; renderEvents();
+  });
+
+  function panels(){
+    document.getElementById('dogPanel').hidden = state.sp === 'cat';
+    document.getElementById('catPanel').hidden = state.sp === 'dog';
+  }
+
+  function setSpecies(sp){
+    state.sp = sp;
+    document.querySelectorAll('[data-sp-btn]').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-sp-btn') === sp ? 'true' : 'false'); });
+    if (sp === 'dog' || sp === 'cat') document.getElementById('postSp').value = sp;
+    renderInfo(); renderFeed(); renderEvents(); panels();
+  }
+  document.querySelectorAll('[data-sp-btn]').forEach(function(b){
+    b.addEventListener('click', function(){ setSpecies(b.getAttribute('data-sp-btn')); });
+  });
+
+  renderInfo(); renderFeed(); renderDogs(); renderCats(); renderEvents(); panels();
+})();
+</script>
+</body>
+</html>
