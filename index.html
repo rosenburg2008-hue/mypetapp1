@@ -41,34 +41,64 @@ img,svg{max-width:100%}
 .skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:#fff;padding:8px 14px;border-radius:8px;z-index:100}
 .skip:focus{left:12px}
 
-/* 헤더 */
+/* 헤더: 서비스 이름 한 줄과 인증 배지, 그 아래 탭 */
 .top{position:sticky;top:0;z-index:50;background:rgba(247,249,245,.94);backdrop-filter:blur(8px);border-bottom:1.5px solid var(--line)}
-.top .wrap{display:flex;align-items:center;gap:20px;min-height:68px}
+.top .wrap{display:flex;align-items:center;gap:12px 16px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
 .logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);font-family:'Jua';font-size:1.5rem;flex-shrink:0}
 .logo svg{width:44px;height:30px}
-.nav{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none}
-.nav a{color:var(--ink);text-decoration:none;padding:6px 12px;border-radius:999px;white-space:nowrap;font-size:.97rem}
-.nav a:hover{background:var(--leaf)}
-.seg{display:flex;background:var(--white);border:1.5px solid var(--line);border-radius:999px;padding:3px;flex-shrink:0}
-.seg button{font:inherit;font-size:.9rem;border:0;background:transparent;color:var(--ink2);padding:5px 12px;border-radius:999px;cursor:pointer}
-.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
-.seg[hidden]{display:none}
-.tabs{display:flex;gap:4px;background:var(--white);border:1.5px solid var(--line);border-radius:999px;padding:4px;flex-shrink:0}
-.tabs button{font:inherit;font-family:'Jua';font-size:1rem;border:0;background:transparent;color:var(--ink2);padding:7px 18px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.tabs{display:flex;gap:4px;background:var(--white);border:1.5px solid var(--line);border-radius:999px;padding:4px;flex-basis:100%;order:3;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{font:inherit;font-family:'Jua';font-size:1rem;border:0;background:transparent;color:var(--ink2);padding:7px 16px;border-radius:999px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px;flex:1;justify-content:center}
 .tabs button:hover{background:var(--leaf)}
 .tabs button[aria-selected="true"]{background:var(--grass);color:#fff}
 .tabs button[aria-selected="true"]:hover{background:var(--grass)}
-.nav a[hidden]{display:none}
-[data-view][hidden]{display:none}
+.tabs .lk{font-size:.82rem;opacity:.75}
+[hidden]{display:none!important}
 
-/* 히어로 */
+/* 인증 등급 배지 */
+.badge{order:2;margin-left:auto;display:flex;align-items:center;gap:8px;font:inherit;font-family:'Jua';font-size:1rem;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:6px 15px;cursor:pointer;color:var(--ink);flex-shrink:0}
+.badge:hover{border-color:var(--ink)}
+.badge .dot{width:11px;height:11px;border-radius:50%;background:var(--ink2);flex-shrink:0}
+.badge .arw{font-size:.78rem;color:var(--ink2)}
+.badge[data-grade="member"] .dot{background:var(--grass)}
+.badge[data-grade="owner"] .dot{background:var(--ball)}
+.badge[data-grade="neighbor"] .dot{background:var(--yarn)}
+.badge[aria-expanded="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.badge[aria-expanded="true"] .arw{color:#fff}
+
+/* 인증 안내 영역 */
+.authbox{background:var(--leaf);border-bottom:1.5px solid var(--line);padding:30px 0 34px}
+.glist{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}
+.gcard{background:#fff;border:1.5px solid var(--line);border-top:6px solid var(--ink2);border-radius:18px;padding:16px 18px}
+.gcard[data-g="member"]{border-top-color:var(--grass)}
+.gcard[data-g="owner"]{border-top-color:var(--ball)}
+.gcard[data-g="neighbor"]{border-top-color:var(--yarn)}
+.gcard.on{border-color:var(--ink);box-shadow:0 0 0 3px var(--ballSoft)}
+.gcard h3{font-size:1.12rem;display:flex;align-items:center;gap:6px}
+.gcard .now{font-size:.74rem;font-family:'Gowun Dodum';background:var(--ink);color:#fff;border-radius:999px;padding:1px 9px}
+.k{display:block;margin-top:12px;font-family:'Jua';font-size:.92rem;color:var(--ink)}
+.gcard ul{margin:4px 0 0;padding-left:1.1em;font-size:.92rem;color:var(--ink2)}
+.gcard li{margin-bottom:2px}
+.gcard li.done{color:var(--grass)}
+.ck{margin-right:5px;font-weight:700}
+.sr{position:absolute;left:-999px}
+.tryon{background:#fff;border:2px solid var(--ink);border-radius:20px;padding:16px 20px}
+.tryon b{font-family:'Jua';font-weight:400;font-size:1.05rem}
+
+/* 잠긴 탭 안내 */
+.lock{background:#fff;border:2px dashed var(--line);border-radius:22px;padding:28px 30px;max-width:680px}
+.lock h3{font-size:1.35rem;margin-bottom:10px}
+.lock ul{margin:6px 0 18px;padding-left:1.1em;font-size:.96rem;color:var(--ink2)}
+.lock li{margin-bottom:3px}
+.lock li.done{color:var(--grass)}
+
+/* 히어로: 기본 화면에서만 보입니다 */
 .hero{padding:64px 0 72px}
 .hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
 .hero p.lead{margin-top:20px}
 .btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.btn{display:inline-block;font:inherit;text-decoration:none;border-radius:14px;padding:12px 22px;border:2px solid var(--ink);cursor:pointer;font-family:'Jua';font-size:1.08rem}
+.btn{display:inline-block;font:inherit;text-decoration:none;border-radius:14px;padding:12px 22px;border:2px solid var(--ink);cursor:pointer;font-family:'Jua';font-size:1.08rem;color:var(--ink);background:transparent}
 .btn.primary{background:var(--ink);color:#fff}
-.btn.ghost{background:transparent;color:var(--ink)}
 .btn:hover{transform:translateY(-1px)}
 .hero-note{margin-top:28px;font-size:.9rem;color:var(--ink2);border-left:4px solid var(--ball);padding-left:12px}
 .map{width:100%;height:auto;display:block}
@@ -77,20 +107,38 @@ img,svg{max-width:100%}
 @keyframes draw{to{stroke-dashoffset:0}}
 
 /* 섹션 */
-.sec{padding:88px 0}
+.sec{padding:72px 0}
 .sec.alt{background:var(--leaf)}
 .sec.dark{background:var(--ink);color:#EAF1EC}
 .sec.dark .lead,.sec.dark .small{color:#C4D3C9}
 .sec-head{margin-bottom:34px}
+.stage{display:inline-block;font-size:.82rem;background:var(--ballSoft);color:var(--ballInk);border-radius:999px;padding:2px 12px;margin-bottom:10px}
 
-/* 정보 허브 */
+/* 다음 단계 기능 목록 */
+.panel{background:#fff;border:1.5px solid var(--line);border-radius:22px;padding:22px 24px}
+.panel h3{display:flex;align-items:center;gap:8px}
+.panel h3 svg{width:30px;height:30px}
+.nextlist{margin:8px 0 0;padding-left:1.15em;font-size:.97rem;color:var(--ink2)}
+.nextlist li{margin-bottom:6px}
+.note{border-left:4px solid var(--yarn);background:var(--yarnSoft);color:var(--yarnInk);border-radius:0 14px 14px 0;padding:14px 18px;font-size:.95rem;margin-top:20px}
+.note b{font-family:'Jua';font-weight:400}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
+.sbtn{white-space:nowrap;font:inherit;font-size:.92rem;border:1.5px solid var(--ink);background:#fff;color:var(--ink);border-radius:10px;padding:6px 14px;cursor:pointer}
+.sbtn[aria-pressed="true"]{background:var(--grass);border-color:var(--grass);color:#fff}
+
+/* 정보 찾기 */
 .toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px}
 .search{flex:1 1 260px;display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:4px 14px}
 .search input{border:0;outline:0;font:inherit;flex:1;padding:8px 0;background:transparent;color:var(--ink)}
 .search:focus-within{border-color:var(--ink)}
+.seg{display:flex;background:var(--white);border:1.5px solid var(--line);border-radius:999px;padding:3px;flex-shrink:0}
+.seg button{font:inherit;font-size:.9rem;border:0;background:transparent;color:var(--ink2);padding:5px 12px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
 .cats{display:flex;flex-wrap:wrap;gap:6px}
 .cats button{font:inherit;font-size:.92rem;border:1.5px solid var(--line);background:#fff;color:var(--ink);padding:5px 13px;border-radius:999px;cursor:pointer}
 .cats button[aria-pressed="true"]{background:var(--grass);border-color:var(--grass);color:#fff}
+.cats button .cnt{margin-left:6px;font-size:.82rem;opacity:.6;font-variant-numeric:tabular-nums}
+.cats button[aria-pressed="true"] .cnt{opacity:.85}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
 .card{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:18px 20px 16px;display:flex;flex-direction:column}
 .card[data-sp="dog"]{border-top:6px solid var(--ball)}
@@ -98,47 +146,13 @@ img,svg{max-width:100%}
 .card[data-sp="all"]{border-top:6px solid var(--grass)}
 .card p{font-size:.96rem;color:var(--ink2);flex:1}
 .card .foot{font-size:.8rem;color:var(--ink2);border-top:1px dashed var(--line);padding-top:8px;margin-top:4px}
+.card:focus{outline:none}
 .chips{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}
 .chip{display:inline-block;border-radius:999px;padding:1px 10px;font-size:.8rem;background:var(--leaf);color:var(--ink)}
 .chip.dog{background:var(--ballSoft);color:var(--ballInk)}
 .chip.cat{background:var(--yarnSoft);color:var(--yarnInk)}
 .empty{background:#fff;border:1.5px dashed var(--line);border-radius:18px;padding:26px;color:var(--ink2)}
-.cats button .cnt{margin-left:6px;font-size:.82rem;opacity:.6;font-variant-numeric:tabular-nums}
-.cats button[aria-pressed="true"] .cnt{opacity:.85}
 .more{display:flex;justify-content:center;margin-top:24px}
-.more[hidden]{display:none}
-.card:focus{outline:none}
-
-/* 마당 */
-.madang{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;align-items:start}
-.panel{background:#fff;border:1.5px solid var(--line);border-radius:22px;padding:22px}
-.panel + .panel{margin-top:20px}
-.panel[hidden]{display:none}
-.panel h3{display:flex;align-items:center;gap:8px}
-.panel h3 svg{width:30px;height:30px}
-.compose textarea{width:100%;min-height:78px;font:inherit;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;color:var(--ink);background:var(--paper)}
-.compose textarea:focus{border-color:var(--ink);outline:0}
-.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
-select{font:inherit;font-size:.93rem;border:1.5px solid var(--line);border-radius:10px;padding:6px 10px;background:#fff;color:var(--ink)}
-.sbtn{white-space:nowrap;font:inherit;font-size:.92rem;border:1.5px solid var(--ink);background:var(--ink);color:#fff;border-radius:10px;padding:6px 14px;cursor:pointer}
-.sbtn.line{background:#fff;color:var(--ink)}
-.sbtn[aria-pressed="true"]{background:var(--grass);border-color:var(--grass);color:#fff}
-.msg{font-size:.88rem;color:#8A3030;min-height:1.3em;margin-top:6px}
-.post{display:grid;grid-template-columns:44px 1fr;gap:12px;padding:16px 0;border-top:1px solid var(--line)}
-.post:first-child{border-top:0}
-.avatar{width:44px;height:44px;border-radius:50%;background:var(--paper);display:grid;place-items:center}
-.avatar svg{width:36px;height:36px}
-.post .who{font-family:'Jua';font-size:1.05rem}
-.post .meta{font-size:.82rem;color:var(--ink2);margin-left:6px;font-family:'Gowun Dodum'}
-.post p{margin:4px 0 8px;font-size:.97rem}
-.like{font:inherit;font-size:.85rem;background:var(--paper);border:1.5px solid var(--line);border-radius:999px;padding:3px 12px;cursor:pointer;color:var(--ink)}
-.like[aria-pressed="true"]{background:var(--ballSoft);border-color:var(--ball);color:var(--ballInk)}
-.mlist{margin-top:12px}
-.mitem{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
-.mitem:first-child{border-top:0}
-.mitem b{font-family:'Jua';font-weight:400;font-size:1.02rem}
-.mitem span{font-size:.85rem;color:var(--ink2);display:block}
-.events{margin-top:28px}
 
 /* 표 */
 .tscroll{overflow-x:auto;border-radius:16px;border:1.5px solid var(--line);background:#fff}
@@ -197,21 +211,26 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
 .credit{margin-top:30px;padding-top:18px;border-top:1px solid rgba(255,255,255,.2);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 .credit b{font-family:'Jua';font-weight:400;color:#fff;font-size:1.1rem}
 
+@media (max-width:1000px){
+  .glist{grid-template-columns:1fr 1fr}
+}
 @media (max-width:900px){
-  .hero .wrap,.madang,.two,.two.wide{grid-template-columns:1fr}
+  html{scroll-padding-top:calc(var(--hh,120px) + 12px)}
+  .hero .wrap,.two,.two.wide{grid-template-columns:1fr}
   .principles,.timeline{grid-template-columns:1fr}
   footer ol{columns:1}
-  .top .wrap{flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
-  .top .wrap{gap:8px 12px;justify-content:space-between;padding-left:16px;padding-right:16px;min-height:0}
-  .logo{order:1;font-size:1.25rem}
-  .logo svg{width:38px;height:26px}
-  .seg{order:2;margin-left:auto}
-  .seg button{padding:4px 9px;font-size:.85rem}
-  .tabs{order:3;flex-basis:100%;padding:3px}
-  .tabs button{flex:1;text-align:center;padding:7px 10px;font-size:.97rem}
-  .nav{order:4;flex-basis:100%;gap:2px}
-  .nav a{padding:3px 10px;font-size:.9rem}
-  .sec{padding:64px 0}
+  .top .wrap{gap:8px 10px;padding-left:16px;padding-right:16px}
+  .logo{font-size:1.2rem}
+  .logo svg{width:36px;height:26px}
+  .badge{font-size:.9rem;padding:5px 12px;gap:6px}
+  .tabs{padding:3px}
+  .tabs button{padding:7px 10px;font-size:.94rem;flex:0 0 auto}
+  .sec{padding:52px 0}
+  .lock{padding:22px}
+  .authbox{padding:24px 0 26px}
+}
+@media (max-width:560px){
+  .glist{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -220,6 +239,7 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
 }
 </style>
 </head>
+
 <body>
 <a class="skip" href="#main">본문으로 건너뛰기</a>
 
@@ -245,44 +265,49 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
 
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="#top" aria-label="멍냥마당 처음으로">
+    <a class="logo" href="#pet" aria-label="멍냥마당 처음 화면으로">
       <svg viewBox="0 0 66 44" aria-hidden="true"><use href="#i-dog" x="0" y="0" width="40" height="40"/><use href="#i-cat" x="24" y="2" width="40" height="40"/></svg>
       멍냥마당
     </a>
-    <div class="tabs" role="tablist" aria-label="페이지 영역 선택">
-      <button type="button" id="tab-service" role="tab" data-tab="app" aria-controls="service" aria-selected="true">서비스 시안</button>
-      <button type="button" id="tab-report" role="tab" data-tab="report" aria-controls="report" aria-selected="false">기획 제안서</button>
-    </div>
-    <nav class="nav" aria-label="섹션 바로가기">
-      <a href="#info" data-nav="app">정보 찾기</a>
-      <a href="#madang" data-nav="app">동네 마당</a>
-      <a href="#research" data-nav="report" hidden>시장 전수조사</a>
-      <a href="#proposal" data-nav="report" hidden>개발 제안</a>
-      <a href="#road" data-nav="report" hidden>단계별 계획</a>
-      <a href="#sources" data-nav="report" hidden>출처</a>
-    </nav>
-    <div class="seg" role="group" aria-label="보고 싶은 반려동물 선택">
-      <button type="button" data-sp-btn="all" aria-pressed="true">모두</button>
-      <button type="button" data-sp-btn="dog" aria-pressed="false">강아지</button>
-      <button type="button" data-sp-btn="cat" aria-pressed="false">고양이</button>
-    </div>
+    <button type="button" class="badge" id="gradeBtn" data-grade="guest" aria-expanded="false" aria-controls="authBox">
+      <span class="dot" aria-hidden="true"></span>
+      <span>내 등급 <span id="gradeName">손님</span></span>
+      <span class="arw" aria-hidden="true">▾</span>
+    </button>
+    <div class="tabs" role="tablist" aria-label="멍냥마당 기능 선택"></div>
   </div>
 </header>
 
+<section class="authbox" id="authBox" aria-labelledby="auth-h" hidden>
+  <div class="wrap">
+    <h2 id="auth-h" tabindex="-1">인증 등급 안내</h2>
+    <p class="lead">멍냥마당은 등급에 따라 열리는 기능이 다릅니다. 아무나 볼 수 있는 정보는 열어 두고, 우리 아이의 기록과 이웃을 직접 만나는 기능은 확인된 보호자에게만 엽니다.</p>
+    <div class="glist" id="glist"></div>
+    <div class="tryon">
+      <b>시안이므로 실제 인증은 하지 않습니다</b>
+      <p class="small" style="margin:4px 0 0">아래 버튼으로 등급을 바꾸면 화면이 어떻게 달라지는지 바로 확인할 수 있습니다. 실제 서비스에서는 본인확인 기관과 동물등록 정보 조회를 거칩니다.</p>
+      <div class="row" id="gswitch" role="group" aria-label="등급 바꿔 보기"></div>
+    </div>
+  </div>
+</section>
+
+
 <main id="main">
 
-<div id="service" data-view="app" role="tabpanel" aria-labelledby="tab-service">
-<section class="hero" id="top">
+<section class="hero" id="hero">
   <div class="wrap">
     <div>
       <h1>개와 고양이, 그리고 이웃이 만나는 동네 마당</h1>
-      <p class="lead">강아지와 고양이를 키우며 생기는 궁금증을 믿을 수 있는 정보로 풀고, 우리 아이의 하루를 기록하고, 같은 동네 이웃과 산책 친구나 탁묘 품앗이로 이어지는 곳. 멍냥마당은 개와 고양이를 똑같이 대접하는 동네 반려생활 포털입니다.</p>
+      <p class="lead">우리 아이의 건강 기록, 병원 진료비, 동네 이웃, 그리고 믿을 수 있는 정보까지. 멍냥마당은 개와 고양이를 똑같이 대접하는 동네 반려생활 포털입니다. 확인된 보호자에게만 여는 기능과 누구나 볼 수 있는 정보를 등급으로 나누어 안전하게 운영합니다.</p>
       <div class="btns">
-        <a class="btn primary" href="#info">정보 찾아보기</a>
-        <a class="btn ghost" href="#report">조사 결과 보기</a>
+        <button type="button" class="btn primary" data-open-auth>인증 등급 안내 보기</button>
+        <a class="btn" href="#info">정보 둘러보기</a>
+        <a class="btn" href="#report">기획 제안서 보기</a>
       </div>
       <p class="hero-note">국내 반려가구는 591만 가구로 전체 가구의 26.7%입니다. 반려견은 줄고 반려묘는 늘고 있습니다. (KB경영연구소, 2024년 말 기준)</p>
     </div>
+    <!-- 지도 그림은 1단계에서는 기존 것을 그대로 둡니다.
+         다음 단계에서 새 서비스 방향(우리 아이 기록, 진료비, 동네)에 맞는 그림으로 교체할 예정입니다. -->
     <svg class="map" viewBox="0 0 520 460" role="img" aria-label="동네 지도 위에서 강아지 산책길과 고양이 골목길이 가운데 마당에서 만나는 그림">
       <defs>
         <mask id="mDog" maskUnits="userSpaceOnUse" x="0" y="0" width="520" height="460">
@@ -323,91 +348,126 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
   </div>
 </section>
 
-<section class="sec alt" id="info" aria-labelledby="info-h">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2 id="info-h">정보 찾기</h2>
-      <p class="lead">먹거리, 건강, 행동, 제도처럼 보호자가 자주 묻는 내용을 한곳에 모았습니다. 위쪽에서 강아지나 고양이를 고르면 해당 정보만 보입니다.</p>
+<div id="p-pet" data-panel="pet" role="tabpanel" aria-labelledby="tab-pet">
+  <section class="sec" aria-labelledby="pet-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="stage">1단계 시안, 기능은 다음 단계에서 채웁니다</span>
+        <h2 id="pet-h">우리 아이</h2>
+        <p class="lead">우리 아이의 기본 정보와 건강 기록을 한곳에 모아 두는 공간입니다. 접종과 구충, 체중과 투약, 병원 방문을 시간 순으로 쌓아 두면 병원에서 묻는 말에 바로 답할 수 있고 다음에 무엇을 해야 하는지도 놓치지 않습니다. 개와 고양이 모두 같은 방식으로 기록합니다.</p>
+      </div>
+      <!-- 등급이 모자라면 아래 자리에 잠김 안내가 들어가고, 기능 목록은 숨깁니다 -->
+      <div data-lock hidden aria-live="polite"></div>
+      <div data-body>
+        <div class="panel">
+          <h3>다음 단계에 들어갈 기능</h3>
+          <ul class="nextlist">
+            <li>아이 등록: 이름, 종과 품종, 생일, 성별과 중성화 여부, 동물등록번호</li>
+            <li>접종과 구충 기록, 다음 접종일 미리 알림</li>
+            <li>체중과 식사량, 투약 기록과 변화 그래프</li>
+            <li>병원 방문 기록과 진료비 영수증 보관</li>
+            <li>여러 마리 등록, 가족 구성원과 기록 함께 보기</li>
+            <li>노령기 돌봄 메모와 이별 이후 기록 보관</li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="toolbar">
-      <label class="search">
-        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="7" stroke="#4A5F54" stroke-width="2" fill="none"/><path d="M15 15 L21 21" stroke="#4A5F54" stroke-width="2" stroke-linecap="round"/></svg>
-        <span class="small" style="position:absolute;left:-999px">정보 검색</span>
-        <input id="q" type="search" placeholder="예: 포도, 화장실, 산책, 등록" autocomplete="off">
-      </label>
+  </section>
+</div>
+
+<div id="p-cost" data-panel="cost" role="tabpanel" aria-labelledby="tab-cost" hidden>
+  <section class="sec" aria-labelledby="cost-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="stage">1단계 시안, 기능은 다음 단계에서 채웁니다</span>
+        <h2 id="cost-h">진료비</h2>
+        <p class="lead">같은 진료인데 병원마다 비용이 크게 다릅니다. 보호자가 실제로 낸 금액을 모아 우리 동네 진료비가 대략 어느 정도인지 미리 가늠할 수 있게 합니다. 병원을 값으로 줄 세우기 위한 것이 아니라 보호자가 놀라지 않고 준비하도록 돕기 위한 정보입니다. 보는 것은 손님도 할 수 있고, 금액 제보는 회원 등급부터 할 수 있습니다.</p>
+      </div>
+      <div data-lock hidden aria-live="polite"></div>
+      <div data-body>
+        <div class="panel">
+          <h3>다음 단계에 들어갈 기능</h3>
+          <ul class="nextlist">
+            <li>진료 항목별 비용 범위: 중성화, 예방접종, 스케일링, 혈액검사, 엑스레이</li>
+            <li>보호자 제보로 모으는 실제 결제 금액과 동네별 중간값</li>
+            <li>수술과 검사 예상 비용 미리 계산해 보기</li>
+            <li>법으로 정해진 진료비 사전 게시 항목 안내</li>
+            <li>펫보험 보장 범위와 자기부담금 비교</li>
+            <li>한 달 양육비 기록과 또래 보호자 평균 비교</li>
+          </ul>
+        </div>
+      </div>
+      <p class="small" style="margin-top:18px">금액은 병원 규모, 지역, 아이의 상태에 따라 달라집니다. 이곳의 숫자는 참고용이며 실제 진료비는 병원에서 확인해야 합니다.</p>
+    </div>
+  </section>
+</div>
+
+<div id="p-town" data-panel="town" role="tabpanel" aria-labelledby="tab-town" hidden>
+  <section class="sec" aria-labelledby="town-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="stage">1단계 시안, 기능은 다음 단계에서 채웁니다</span>
+        <h2 id="town-h">동네</h2>
+        <p class="lead">같은 동네 보호자와 만나는 공간입니다. 산책 친구를 찾고 동네 모임에 참여합니다. 직접 만나는 기능이므로 접종 기록이 최신이고 신고 이력이 없는 이웃 등급부터 열립니다. 위치는 동네 단위까지만 보이고 정확한 주소는 공개하지 않습니다.</p>
+      </div>
+      <div data-lock hidden aria-live="polite"></div>
+      <div data-body>
+        <div class="panel">
+          <h3>다음 단계에 들어갈 기능</h3>
+          <ul class="nextlist">
+            <li>산책 친구 찾기: 몸집, 산책 시간대, 성향으로 맞추기</li>
+            <li>동네 산책로와 반려견 동반 장소 지도</li>
+            <li>동네 모임 일정과 신청</li>
+            <li>만남 뒤 남기는 후기, 신고 접수와 처리</li>
+            <li>동네 인증과 활동 범위 설정</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note">
+        <b>동네 기능은 개 보호자 전용입니다.</b><br>
+        고양이는 종 특성상 낯선 공간과 낯선 동물을 만나는 일이 큰 스트레스가 되기 쉽습니다. 그래서 고양이 보호자에게는 대면 교류 대신 우리 아이 기록과 진료비 기능으로 도움을 드립니다. 고양이를 억지로 밖으로 데리고 나오게 만드는 기능은 만들지 않습니다.
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="p-info" data-panel="info" role="tabpanel" aria-labelledby="tab-info" hidden>
+  <section class="sec alt" aria-labelledby="info-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="info-h">정보 찾기</h2>
+        <p class="lead">먹거리, 건강, 행동, 제도처럼 보호자가 자주 묻는 내용을 한곳에 모았습니다. 강아지나 고양이를 고르면 해당 정보만 보이고, 분류와 검색으로 더 좁힐 수 있습니다. 인증 없이 누구나 볼 수 있습니다.</p>
+      </div>
+      <div class="toolbar">
+        <label class="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="7" stroke="#4A5F54" stroke-width="2" fill="none"/><path d="M15 15 L21 21" stroke="#4A5F54" stroke-width="2" stroke-linecap="round"/></svg>
+          <span class="small" style="position:absolute;left:-999px">정보 검색</span>
+          <input id="q" type="search" placeholder="예: 포도, 화장실, 산책, 등록" autocomplete="off">
+        </label>
+        <div class="seg" role="group" aria-label="보고 싶은 반려동물 선택">
+          <button type="button" data-sp-btn="all" aria-pressed="true">모두</button>
+          <button type="button" data-sp-btn="dog" aria-pressed="false">강아지</button>
+          <button type="button" data-sp-btn="cat" aria-pressed="false">고양이</button>
+        </div>
+      </div>
       <div class="cats" id="cats" role="group" aria-label="분류"></div>
-    </div>
-    <div class="grid" id="infoGrid" aria-live="polite"></div>
-    <div class="more" id="moreWrap" hidden><button type="button" class="btn ghost" id="moreBtn">더 보기</button></div>
-    <p class="small" style="margin-top:18px">여기 실린 정보는 시안용 예시입니다. 출시 전에는 모든 건강 정보를 수의사가 검수하고, 검수자와 검수일을 카드마다 표시합니다. 이 정보는 진료를 대신하지 않습니다.</p>
-  </div>
-</section>
-
-<section class="sec" id="madang" aria-labelledby="madang-h">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2 id="madang-h">동네 마당</h2>
-      <p class="lead">강아지는 산책 친구를, 고양이는 집사 이웃을 만납니다. 고양이는 대부분 집 안에서 지내기 때문에 고양이의 교류는 보호자끼리 돌봄을 나누는 방식으로 설계했습니다. 아래 게시글과 친구, 모임은 모두 예시 데이터입니다.</p>
-    </div>
-    <div class="madang">
-      <div class="panel">
-        <h3>마당 소식</h3>
-        <div class="compose">
-          <label for="postText" class="small">우리 아이 이야기를 남겨 보세요</label>
-          <textarea id="postText" maxlength="300" placeholder="오늘 산책에서 있었던 일, 궁금한 점, 자랑하고 싶은 순간"></textarea>
-          <div class="row">
-            <select id="postSp" aria-label="게시글 반려동물">
-              <option value="dog">강아지 이야기</option>
-              <option value="cat">고양이 이야기</option>
-            </select>
-            <button type="button" class="sbtn" id="postBtn">게시하기</button>
-          </div>
-          <div class="msg" id="postMsg" role="status"></div>
-        </div>
-        <div id="feed" aria-live="polite"></div>
-      </div>
-      <div>
-        <div class="panel" id="dogPanel">
-          <h3><svg aria-hidden="true"><use href="#i-dog"/></svg>산책 친구 찾기</h3>
-          <p class="small">몸집과 산책 시간대가 맞는 동네 강아지를 찾아 인사를 보냅니다. 위치는 동네 단위로만 보입니다.</p>
-          <div class="row">
-            <select id="mSize" aria-label="몸집">
-              <option value="all">몸집 전체</option>
-              <option value="소형">소형견</option>
-              <option value="중형">중형견</option>
-              <option value="대형">대형견</option>
-            </select>
-            <select id="mTime" aria-label="산책 시간대">
-              <option value="all">시간대 전체</option>
-              <option value="아침">아침</option>
-              <option value="저녁">저녁</option>
-              <option value="밤">밤</option>
-            </select>
-          </div>
-          <div class="mlist" id="dogList" aria-live="polite"></div>
-        </div>
-        <div class="panel" id="catPanel">
-          <h3><svg aria-hidden="true"><use href="#i-cat"/></svg>집사 품앗이</h3>
-          <p class="small">여행이나 야근 때 서로의 고양이를 돌봐 주는 이웃, 사진을 나누는 온라인 모임을 연결합니다.</p>
-          <div class="mlist" id="catList"></div>
-        </div>
+      <div class="grid" id="infoGrid" aria-live="polite" style="margin-top:22px"></div>
+      <div class="more" id="moreWrap" hidden><button type="button" class="btn" id="moreBtn">더 보기</button></div>
+      <p class="small" style="margin-top:18px">여기 실린 정보는 시안용 예시입니다. 출시 전에는 모든 건강 정보를 수의사가 검수하고, 검수자와 검수일을 카드마다 표시합니다. 이 정보는 진료를 대신하지 않습니다.</p>
+      <div class="panel" style="margin-top:30px">
+        <h3>다음 단계에 들어갈 기능</h3>
+        <ul class="nextlist">
+          <li>카드마다 수의사 검수자와 검수일 표시</li>
+          <li>우리 아이의 나이, 종, 계절에 맞춘 정보 추천</li>
+          <li>정보 저장해 두고 모아 보기 (회원 등급부터)</li>
+          <li>응급 상황 안내와 가까운 야간 병원 연결</li>
+        </ul>
       </div>
     </div>
-    <div class="events">
-      <h3 style="margin-bottom:12px">다가오는 모임</h3>
-      <div class="tscroll">
-        <table class="tbl">
-          <thead><tr><th>날짜</th><th>모임</th><th>대상</th><th>장소</th><th>신청</th></tr></thead>
-          <tbody id="events"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
+</div>
 
-</div><!-- /#service -->
-
-<div id="report" data-view="report" role="tabpanel" aria-labelledby="tab-report" hidden>
+<div id="p-report" data-panel="report" role="tabpanel" aria-labelledby="tab-report" hidden>
 <section class="sec alt" id="research" aria-labelledby="research-h">
   <div class="wrap">
     <div class="sec-head">
@@ -657,7 +717,7 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
       <table class="tbl">
         <thead><tr><th>지표</th><th>정의</th><th>1년 목표 (가설)</th></tr></thead>
         <tbody>
-          <tr><td>핵심 지표</td><td>한 주에 교류 활동(글, 댓글, 인사, 모임 신청)을 한 반려가구 수</td><td>활성 가구의 40% 이상</td></tr>
+          <tr><td>핵심 지표</td><td>건강기록이 3개월 이상 이어진 반려동물 수</td><td>6개월 차 1천 마리</td></tr>
           <tr><td>30일 재방문율</td><td>가입 30일 뒤에도 방문하는 비율</td><td>30% 이상</td></tr>
           <tr><td>고양이 보호자 비중</td><td>전체 활성 가구 중 고양이 보호자</td><td>35% 이상</td></tr>
           <tr><td>산책 친구 성사율</td><td>보낸 인사 중 실제 약속으로 이어진 비율</td><td>15% 이상</td></tr>
@@ -682,11 +742,12 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
     </div>
   </div>
 </section>
-</div><!-- /#report -->
+</div>
+
 
 </main>
 
-<footer id="sources" data-view="report" hidden>
+<footer id="sources" data-panel="report" hidden>
   <div class="wrap">
     <h2>출처</h2>
     <p>수치는 아래 공개 자료에서 확인했으며, 2026년 9월 기준 공개 자료를 바탕으로 합니다. 유료 보고서는 공개 요약본만 참고했습니다.</p>
@@ -717,7 +778,33 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
 
 <script>
 (function(){
-  var state = { sp:'all', cat:'전체', q:'' };
+  /* 1단계 시안입니다. 탭 뼈대와 인증 등급 체계만 만들었고,
+     각 탭의 실제 기능과 데이터는 다음 단계에서 채웁니다. */
+
+  var state = { tab:'pet', grade:'guest', sp:'all', cat:'전체', q:'' };
+
+  /* 인증 등급. 배열 순서가 곧 등급 높이이며, 인증 조건은 윗 등급의 조건을 모두 포함합니다 */
+  var GRADES = [
+    {k:'guest', n:'손님', need:[],
+      can:['정보 찾기 전체 열람','진료비 정보 열람','기획 제안서 열람']},
+    {k:'member', n:'회원', need:['휴대폰 본인확인'],
+      can:['정보 저장과 알림 받기','내가 낸 진료비 기록하기','댓글 남기기']},
+    {k:'owner', n:'보호자', need:['동물등록번호 인증','보호자 관계 확인'],
+      can:['우리 아이 기록 전체','병원 기록과 영수증 보관','가족과 기록 함께 보기']},
+    {k:'neighbor', n:'이웃', need:['접종 기록 최신','신고 이력 없음'],
+      can:['매일 저녁 같이 걷는 산책 짝 찾기','우리 아이의 사회성 기록','만남 후 우리 아이가 편안했는지 남기기']}
+  ];
+
+  /* 탭과 각 탭에 필요한 등급 */
+  var TABS = [
+    {k:'pet', n:'우리 아이', need:'owner', why:'아이의 건강 기록은 실제 보호자만 남기고 볼 수 있어야 하므로, 동물등록번호로 보호자임을 확인한 뒤에 열립니다.'},
+    {k:'cost', n:'진료비', need:'guest', why:''},
+    {k:'town', n:'동네', need:'neighbor', why:'이웃을 직접 만나는 기능이므로 접종 기록이 최신이고 신고 이력이 없는지까지 확인한 뒤에 열립니다.'},
+    {k:'info', n:'정보', need:'guest', why:''},
+    {k:'report', n:'기획 제안서', need:'guest', why:''}
+  ];
+
+  var HOME = 'pet';  /* 처음 들어왔을 때 열리는 기본 화면. 히어로는 이 화면에서만 보입니다 */
 
   var INFO = [
     {sp:'dog', cat:'먹거리', t:'강아지에게 주면 안 되는 음식', b:'초콜릿, 포도와 건포도, 양파와 마늘, 자일리톨이 든 껌과 과자는 적은 양으로도 중독을 일으킬 수 있습니다. 먹은 것이 의심되면 먹은 양과 시간을 적어 바로 동물병원에 연락하세요.'},
@@ -767,39 +854,6 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
     {sp:'all', cat:'여행과 이동', t:'차 안에 잠깐도 혼자 두지 마세요', b:'흐린 날에도 주차된 차 안은 짧은 시간에 위험한 온도까지 오릅니다. 창문을 조금 열어 두어도 마찬가지이므로 잠깐이라도 혼자 두지 않는 것이 안전합니다.'}
   ];
 
-  var FEED = [
-    {sp:'dog', who:'보리', meta:'말티즈, 4살', ago:'12분 전', t:'오늘 아침 하천 산책로에서 처음으로 대형견 친구랑 인사했어요. 꼬리 흔드는 거 보고 울컥했습니다.', likes:24},
-    {sp:'cat', who:'두부', meta:'코리안 숏헤어, 2살', ago:'40분 전', t:'다음 주 사흘 출장인데 저녁에 밥이랑 화장실 봐 주실 이웃 집사님 계실까요? 저도 다음에 꼭 갚을게요.', likes:17},
-    {sp:'dog', who:'콩떡', meta:'진돗개 믹스, 7살', ago:'1시간 전', t:'노견이라 천천히 걷는데 같이 느리게 걸어 줄 친구 구해요. 저녁 7시쯤 공원 한 바퀴 돌아요.', likes:31},
-    {sp:'cat', who:'나비와 호두', meta:'두 마리 집사', ago:'3시간 전', t:'화장실 세 개로 늘렸더니 호두가 더 이상 이불에 실수를 안 해요. 정보 카드 보고 따라 했습니다.', likes:42},
-    {sp:'dog', who:'망고', meta:'웰시코기, 1살', ago:'어제', t:'퍼피 사회화 모임 다녀왔어요. 처음엔 숨더니 마지막엔 제일 신나게 뛰었어요.', likes:56}
-  ];
-
-  var DOGS = [
-    {n:'콩이', br:'푸들', size:'소형', time:'아침', tem:'차분하고 사람을 좋아해요'},
-    {n:'루이', br:'골든 리트리버', size:'대형', time:'저녁', tem:'활발하고 공놀이를 좋아해요'},
-    {n:'밤비', br:'시바견', size:'중형', time:'밤', tem:'처음엔 낯을 가려요'},
-    {n:'솜이', br:'비숑', size:'소형', time:'저녁', tem:'다른 소형견과 잘 놀아요'},
-    {n:'대장', br:'진돗개', size:'중형', time:'아침', tem:'천천히 걷는 걸 좋아해요'},
-    {n:'코코', br:'보더콜리', size:'중형', time:'저녁', tem:'오래 걷고 뛰는 걸 좋아해요'},
-    {n:'하루', br:'래브라도', size:'대형', time:'아침', tem:'순하고 어린 개에게 너그러워요'}
-  ];
-
-  var CATS = [
-    {n:'탁묘 품앗이 짝꿍', d:'같은 동네 집사끼리 출장, 여행 때 서로 밥과 화장실 챙기기', btn:'짝꿍 신청'},
-    {n:'노묘 집사 모임', d:'열 살 넘은 고양이의 식이와 병원 경험 나누기, 매달 둘째 주 온라인', btn:'참여 신청'},
-    {n:'다묘 가정 생활 연구회', d:'여러 마리 합사, 화장실, 급식 요령 공유', btn:'참여 신청'},
-    {n:'창가 사진전', d:'우리 고양이 창가 사진을 모아 한 달에 한 번 온라인 전시', btn:'사진 내기'}
-  ];
-
-  var EVENTS = [
-    {d:'9월 19일 (토)', n:'퍼피 사회화 놀이 시간', sp:'dog', who:'생후 6개월 이하 강아지', where:'동네 공원 잔디마당'},
-    {d:'9월 24일 (목)', n:'노견과 느린 저녁 산책', sp:'dog', who:'8살 이상 반려견', where:'하천 산책로 입구'},
-    {d:'9월 26일 (토)', n:'처음 집사 오리엔테이션', sp:'cat', who:'입양 1년 이내 고양이 보호자', where:'온라인'},
-    {d:'10월 3일 (토)', n:'동물병원과 함께하는 응급처치 교실', sp:'all', who:'모든 보호자', where:'동네 동물병원 세미나실'},
-    {d:'10월 10일 (토)', n:'무지개다리 추모 모임', sp:'all', who:'반려동물을 떠나보낸 보호자', where:'온라인'}
-  ];
-
   function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
   function spOk(sp){ return state.sp === 'all' || sp === 'all' || sp === state.sp; }
   function spChip(sp){
@@ -807,9 +861,150 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
     if (sp === 'cat') return '<span class="chip cat">고양이</span>';
     return '<span class="chip">개와 고양이</span>';
   }
-  function icon(sp){ return '<svg aria-hidden="true"><use href="#i-' + (sp === 'cat' ? 'cat' : 'dog') + '"/></svg>'; }
 
-  /* 분류 버튼 */
+  /* 등급 도우미 */
+  function gi(k){ for (var i = 0; i < GRADES.length; i++){ if (GRADES[i].k === k) return i; } return 0; }
+  function meets(need){ return gi(state.grade) >= gi(need); }
+
+  /* i번째 등급까지 필요한 인증 조건을 모아 목록으로 만듭니다 */
+  function needList(i){
+    if (i === 0) return '<li>별도 인증 없이 누구나 볼 수 있습니다</li>';
+    var cur = gi(state.grade), out = '', j, m, done, g;
+    for (j = 1; j <= i; j++){
+      g = GRADES[j];
+      done = cur >= j;
+      for (m = 0; m < g.need.length; m++){
+        out += done
+          ? '<li class="done"><span class="ck" aria-hidden="true">✓</span>' + esc(g.need[m]) + '<span class="sr"> 확인 완료</span></li>'
+          : '<li>' + esc(g.need[m]) + '</li>';
+      }
+    }
+    return out;
+  }
+
+  /* 탭 버튼 만들기 */
+  var tabsBox = document.querySelector('.tabs');
+  tabsBox.innerHTML = TABS.map(function(t){
+    return '<button type="button" id="tab-' + t.k + '" role="tab" data-tab="' + t.k +
+      '" aria-controls="p-' + t.k + '" aria-selected="' + (t.k === HOME) + '">' + esc(t.n) +
+      '<span class="lk" aria-hidden="true" hidden>🔒</span></button>';
+  }).join('');
+
+  /* 인증 안내 영역 */
+  var authBox = document.getElementById('authBox');
+  var gBtn = document.getElementById('gradeBtn');
+
+  function renderBadge(){
+    gBtn.setAttribute('data-grade', state.grade);
+    document.getElementById('gradeName').textContent = GRADES[gi(state.grade)].n;
+  }
+
+  function renderAuth(){
+    document.getElementById('glist').innerHTML = GRADES.map(function(g, i){
+      var on = g.k === state.grade;
+      return '<div class="gcard' + (on ? ' on' : '') + '" data-g="' + g.k + '">' +
+        '<h3>' + esc(g.n) + (on ? '<span class="now">지금 내 등급</span>' : '') + '</h3>' +
+        '<span class="k">인증 조건</span><ul>' + needList(i) + '</ul>' +
+        '<span class="k">열리는 기능</span><ul>' +
+        g.can.map(function(c){ return '<li>' + esc(c) + '</li>'; }).join('') + '</ul></div>';
+    }).join('');
+    document.getElementById('gswitch').innerHTML = GRADES.map(function(g){
+      return '<button type="button" class="sbtn" data-g-set="' + g.k + '" aria-pressed="' +
+        (g.k === state.grade) + '">' + esc(g.n) + ' 등급으로 보기</button>';
+    }).join('');
+  }
+
+  function setAuth(open){
+    authBox.hidden = !open;
+    gBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    syncHeaderHeight();
+    if (open) document.getElementById('auth-h').focus();
+  }
+
+  gBtn.addEventListener('click', function(){ setAuth(authBox.hidden); });
+  document.getElementById('gswitch').addEventListener('click', function(e){
+    var b = e.target.closest('[data-g-set]'); if (!b) return;
+    setGrade(b.getAttribute('data-g-set'));
+  });
+  /* 잠금 안내와 히어로에 있는 '인증 등급 안내' 버튼 */
+  document.addEventListener('click', function(e){
+    if (e.target.closest && e.target.closest('[data-open-auth]')) setAuth(true);
+  });
+
+  /* 등급에 따라 탭 잠금을 다시 그립니다 */
+  function renderLocks(){
+    TABS.forEach(function(t){
+      var ok = meets(t.need);
+      tabsBox.querySelector('[data-tab="' + t.k + '"] .lk').hidden = ok;
+      var panel = document.getElementById('p-' + t.k);
+      var lock = panel.querySelector('[data-lock]');
+      if (!lock) return;
+      panel.querySelector('[data-body]').hidden = !ok;
+      lock.hidden = ok;
+      if (ok) return;
+      var g = GRADES[gi(t.need)];
+      lock.innerHTML = '<div class="lock">' +
+        '<h3 id="lock-' + t.k + '-h">이 기능은 ' + esc(g.n) + ' 등급부터 이용할 수 있습니다</h3>' +
+        '<p>' + esc(t.why) + '</p>' +
+        '<span class="k">필요한 인증</span><ul>' + needList(gi(t.need)) + '</ul>' +
+        '<button type="button" class="btn primary" data-open-auth>인증 등급 안내 열기</button>' +
+        '</div>';
+    });
+  }
+
+  function setGrade(k){
+    state.grade = k;
+    renderBadge(); renderAuth(); renderLocks();
+  }
+
+  /* 탭 전환 */
+  var header = document.querySelector('.top');
+  function syncHeaderHeight(){
+    document.documentElement.style.setProperty('--hh', header.offsetHeight + 'px');
+  }
+
+  function setTab(k){
+    state.tab = k;
+    document.querySelectorAll('[data-panel]').forEach(function(el){
+      el.hidden = el.getAttribute('data-panel') !== k;
+    });
+    tabsBox.querySelectorAll('button[data-tab]').forEach(function(b){
+      b.setAttribute('aria-selected', b.getAttribute('data-tab') === k ? 'true' : 'false');
+    });
+    /* 히어로는 기본 화면에서만 보이고 다른 탭에서는 숨깁니다 */
+    document.getElementById('hero').hidden = k !== HOME;
+    syncHeaderHeight();
+  }
+
+  var REPORT_IDS = ['research','proposal','road','sources'];
+  function applyHash(){
+    var id = (location.hash || '').replace('#',''), k = HOME, go = null, i;
+    for (i = 0; i < TABS.length; i++){ if (TABS[i].k === id) k = id; }
+    if (REPORT_IDS.indexOf(id) > -1){ k = 'report'; go = id; }
+    setTab(k);
+    if (go){ var el = document.getElementById(go); if (el) el.scrollIntoView(); }
+    else window.scrollTo(0, 0);
+  }
+
+  tabsBox.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-tab]'); if (!b) return;
+    var k = b.getAttribute('data-tab');
+    if ((location.hash || '').replace('#','') === k) applyHash();
+    else location.hash = k;
+  });
+  tabsBox.addEventListener('keydown', function(e){
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    var btns = [].slice.call(tabsBox.querySelectorAll('button[data-tab]'));
+    var i = btns.indexOf(document.activeElement); if (i < 0) return;
+    var n = (i + (e.key === 'ArrowRight' ? 1 : btns.length - 1)) % btns.length;
+    e.preventDefault(); btns[n].focus(); btns[n].click();
+  });
+  window.addEventListener('hashchange', applyHash);
+  window.addEventListener('resize', syncHeaderHeight);
+  /* 글꼴이 늦게 불러와지면 헤더 높이가 달라지므로 다시 잽니다 */
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncHeaderHeight);
+
+  /* 정보 찾기: 분류 버튼은 INFO의 cat 값에서 자동으로 만들어집니다 */
   var catBox = document.getElementById('cats');
   var catNames = ['전체'];
   INFO.forEach(function(i){ if (catNames.indexOf(i.cat) < 0) catNames.push(i.cat); });
@@ -873,150 +1068,21 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
     if (first){ first.setAttribute('tabindex', '-1'); first.focus(); }
   });
 
-  function renderFeed(){
-    var box = document.getElementById('feed');
-    var list = FEED.filter(function(p){ return spOk(p.sp); });
-    if (!list.length){
-      box.innerHTML = '<div class="post"><div></div><p class="small">아직 이 마당에 글이 없습니다. 첫 이야기를 남겨 보세요.</p></div>';
-      return;
-    }
-    box.innerHTML = list.map(function(p){
-      var idx = FEED.indexOf(p);
-      return '<article class="post">' +
-        '<div class="avatar">' + icon(p.sp) + '</div>' +
-        '<div><div class="who">' + esc(p.who) + '<span class="meta">' + esc(p.meta) + ', ' + esc(p.ago) + '</span></div>' +
-        '<p>' + esc(p.t) + '</p>' +
-        '<button type="button" class="like" data-i="' + idx + '" aria-pressed="' + (p.liked ? 'true' : 'false') + '">좋아요 ' + (p.likes + (p.liked ? 1 : 0)) + '</button>' +
-        '</div></article>';
-    }).join('');
-  }
-  document.getElementById('feed').addEventListener('click', function(e){
-    var b = e.target.closest('.like'); if (!b) return;
-    var p = FEED[+b.getAttribute('data-i')];
-    p.liked = !p.liked;
-    renderFeed();
-  });
-
-  document.getElementById('postBtn').addEventListener('click', function(){
-    var ta = document.getElementById('postText');
-    var msg = document.getElementById('postMsg');
-    var txt = ta.value.trim();
-    if (!txt){ msg.textContent = '내용을 입력하면 게시할 수 있습니다.'; ta.focus(); return; }
-    var sp = document.getElementById('postSp').value;
-    FEED.unshift({sp:sp, who:'나', meta: sp === 'cat' ? '고양이 보호자' : '강아지 보호자', ago:'방금', t:txt, likes:0});
-    ta.value = '';
-    msg.textContent = '';
-    if (!spOk(sp)) setSpecies('all');
-    renderFeed();
-  });
-
-  function renderDogs(){
-    var size = document.getElementById('mSize').value;
-    var time = document.getElementById('mTime').value;
-    var list = DOGS.filter(function(d){ return (size === 'all' || d.size === size) && (time === 'all' || d.time === time); });
-    var box = document.getElementById('dogList');
-    if (!list.length){
-      box.innerHTML = '<p class="small">조건에 맞는 친구가 아직 없습니다. 시간대를 전체로 바꾸거나 동네 마당에 산책 모집 글을 올려 보세요.</p>';
-      return;
-    }
-    box.innerHTML = list.map(function(d){
-      var idx = DOGS.indexOf(d);
-      return '<div class="mitem"><div><b>' + esc(d.n) + '</b><span>' + esc(d.br) + ', ' + esc(d.size) + '견, ' + esc(d.time) + ' 산책. ' + esc(d.tem) + '</span></div>' +
-        '<button type="button" class="sbtn line" data-d="' + idx + '" aria-pressed="' + (d.sent ? 'true' : 'false') + '">' + (d.sent ? '인사를 보냈어요' : '인사하기') + '</button></div>';
-    }).join('');
-  }
-  document.getElementById('mSize').addEventListener('change', renderDogs);
-  document.getElementById('mTime').addEventListener('change', renderDogs);
-  document.getElementById('dogList').addEventListener('click', function(e){
-    var b = e.target.closest('button'); if (!b) return;
-    var d = DOGS[+b.getAttribute('data-d')]; d.sent = !d.sent; renderDogs();
-  });
-
-  function renderCats(){
-    document.getElementById('catList').innerHTML = CATS.map(function(c, i){
-      return '<div class="mitem"><div><b>' + esc(c.n) + '</b><span>' + esc(c.d) + '</span></div>' +
-        '<button type="button" class="sbtn line" data-c="' + i + '" aria-pressed="' + (c.on ? 'true' : 'false') + '">' + (c.on ? '신청했어요' : esc(c.btn)) + '</button></div>';
-    }).join('');
-  }
-  document.getElementById('catList').addEventListener('click', function(e){
-    var b = e.target.closest('button'); if (!b) return;
-    var c = CATS[+b.getAttribute('data-c')]; c.on = !c.on; renderCats();
-  });
-
-  function renderEvents(){
-    var rows = EVENTS.filter(function(v){ return spOk(v.sp); });
-    document.getElementById('events').innerHTML = rows.map(function(v){
-      var idx = EVENTS.indexOf(v);
-      return '<tr><td class="num">' + esc(v.d) + '</td><td>' + esc(v.n) + '</td><td>' + spChip(v.sp) + ' ' + esc(v.who) + '</td><td>' + esc(v.where) + '</td>' +
-        '<td><button type="button" class="sbtn line" data-e="' + idx + '" aria-pressed="' + (v.on ? 'true' : 'false') + '">' + (v.on ? '신청 완료' : '신청하기') + '</button></td></tr>';
-    }).join('');
-  }
-  document.getElementById('events').addEventListener('click', function(e){
-    var b = e.target.closest('button'); if (!b) return;
-    var v = EVENTS[+b.getAttribute('data-e')]; v.on = !v.on; renderEvents();
-  });
-
-  function panels(){
-    document.getElementById('dogPanel').hidden = state.sp === 'cat';
-    document.getElementById('catPanel').hidden = state.sp === 'dog';
-  }
-
   function setSpecies(sp){
     state.sp = sp;
     document.querySelectorAll('[data-sp-btn]').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-sp-btn') === sp ? 'true' : 'false'); });
-    if (sp === 'dog' || sp === 'cat') document.getElementById('postSp').value = sp;
     shown = PAGE;
-    renderInfo(); renderFeed(); renderEvents(); panels();
+    renderInfo();
   }
   document.querySelectorAll('[data-sp-btn]').forEach(function(b){
     b.addEventListener('click', function(){ setSpecies(b.getAttribute('data-sp-btn')); });
   });
 
-  /* 탭 전환과 주소(#) 처리 */
-  var REPORT_IDS = ['report','research','proposal','road','sources'];
-  var header = document.querySelector('.top');
-  var tabsBox = document.querySelector('.tabs');
-
-  function syncHeaderHeight(){
-    document.documentElement.style.setProperty('--hh', header.offsetHeight + 'px');
-  }
-
-  function setView(v){
-    document.querySelectorAll('[data-view]').forEach(function(el){
-      el.hidden = el.getAttribute('data-view') !== v;
-    });
-    tabsBox.querySelectorAll('button[data-tab]').forEach(function(b){
-      b.setAttribute('aria-selected', b.getAttribute('data-tab') === v ? 'true' : 'false');
-    });
-    document.querySelectorAll('.nav a[data-nav]').forEach(function(a){
-      a.hidden = a.getAttribute('data-nav') !== v;
-    });
-    document.querySelector('.seg').hidden = v !== 'app';
-    syncHeaderHeight();
-  }
-
-  function applyHash(){
-    var id = (location.hash || '').replace('#','');
-    setView(REPORT_IDS.indexOf(id) > -1 ? 'report' : 'app');
-    if (!id) return;
-    var el = document.getElementById(id);
-    if (el) el.scrollIntoView();
-  }
-
-  tabsBox.addEventListener('click', function(e){
-    var b = e.target.closest('button[data-tab]'); if (!b) return;
-    var want = b.getAttribute('data-tab') === 'report' ? 'report' : 'top';
-    if ((location.hash || '').replace('#','') === want) applyHash();
-    else location.hash = want;
-  });
-  window.addEventListener('hashchange', applyHash);
-  window.addEventListener('resize', syncHeaderHeight);
-  /* 글꼴이 늦게 불러와지면 헤더 높이가 달라지므로 다시 잽니다 */
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncHeaderHeight);
-
-  renderInfo(); renderFeed(); renderDogs(); renderCats(); renderEvents(); panels();
+  renderBadge(); renderAuth(); renderLocks(); renderInfo();
   applyHash();
+  syncHeaderHeight();
 })();
 </script>
+
 </body>
 </html>
