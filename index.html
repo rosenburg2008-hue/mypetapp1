@@ -141,6 +141,21 @@ img,svg{max-width:100%}
 .idnote{max-width:720px;margin-top:12px;border-left:4px solid var(--grass);padding-left:12px;font-size:.9rem;color:var(--ink2)}
 .slots{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:30px}
 .slots h3{margin-bottom:8px}
+.slots label{display:block;font-size:.86rem;color:var(--ink2);margin-top:12px}
+.slots label:first-of-type{margin-top:0}
+.slots input{display:block;width:100%;margin-top:4px;font:inherit;font-size:.98rem;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:9px 12px}
+.receipt{margin-top:14px;width:96px;height:96px;border:1.5px dashed var(--line);border-radius:14px;background:var(--leaf);display:grid;place-items:center;text-align:center;font-size:.8rem;color:var(--ink2);padding:6px}
+.slots .btn{margin-top:16px}
+.vsummary{margin:0 0 12px;font-size:.92rem;color:var(--ink2)}
+.vsummary b{color:var(--ink);font-family:'Jua';font-weight:400}
+.vtimeline{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.vtimeline li{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;background:#fff;border:1.5px solid var(--line);border-left:5px solid var(--ink2);border-radius:12px;padding:10px 14px;font-size:.92rem}
+.vtimeline li.vax{border-left-color:var(--grass)}
+.vtimeline .d{font-variant-numeric:tabular-nums;color:var(--ink2);white-space:nowrap}
+.vtimeline .h{color:var(--ink2)}
+.vtimeline .i{flex:1 1 auto;min-width:120px}
+.vtimeline .c{font-variant-numeric:tabular-nums;margin-left:auto;white-space:nowrap}
+.vtimeline .tag{margin-left:6px;font-size:.74rem;background:var(--grass);color:#fff;border-radius:999px;padding:1px 8px}
 
 /* 동네 산책 짝 카드 */
 .wlist{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
@@ -413,12 +428,19 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
 
         <div class="slots">
           <div>
-            <h3>진료 기록</h3>
-            <div class="empty">아직 남긴 진료 기록이 없습니다. 병원 방문, 검사와 처방, 진료비 영수증이 이 자리에 쌓입니다.</div>
+            <h3>진료 기록 남기기</h3>
+            <label>날짜<input type="date" id="v-date"></label>
+            <label>병원 이름<input type="text" id="v-hosp" placeholder="예: 마당동물병원" autocomplete="off"></label>
+            <label>진료 항목<input type="text" id="v-item" placeholder="예: 종합백신 4차" autocomplete="off"></label>
+            <label>금액<input type="number" id="v-cost" placeholder="원" inputmode="numeric" min="0"></label>
+            <div class="receipt" aria-hidden="true"><span>영수증 사진 자리</span></div>
+            <p class="small" style="margin:8px 0 0">시안이므로 사진은 실제로 올라가지 않고, 입력한 내용은 오른쪽 타임라인에만 더해집니다.</p>
+            <button type="button" class="btn primary" id="v-add">추가</button>
           </div>
           <div>
             <h3>타임라인</h3>
-            <div class="empty">아직 쌓인 기록이 없습니다. 접종과 구충, 체중과 투약, 병원 방문이 시간 순으로 이 자리에 놓입니다.</div>
+            <p class="vsummary" id="vSummary" aria-live="polite"></p>
+            <ul class="vtimeline" id="vTimeline" aria-live="polite"></ul>
           </div>
         </div>
 
@@ -893,6 +915,15 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
     vaxNext:'2027-04-18'
   };
 
+  /* 우리 아이 진료 기록 타임라인에 들어가는 시안용 예시 자료입니다 */
+  var VISITS = [
+    {date:'2025-03-02', hosp:'마당동물병원', item:'종합백신 3차', cost:35000, vax:true},
+    {date:'2025-05-14', hosp:'마당동물병원', item:'구충제 처방', cost:18000, vax:false},
+    {date:'2025-08-09', hosp:'우리동네동물의료센터', item:'슬개골 정기 검진', cost:42000, vax:false},
+    {date:'2025-11-20', hosp:'마당동물병원', item:'광견병 예방접종', cost:25000, vax:true},
+    {date:'2026-02-03', hosp:'우리동네동물의료센터', item:'스케일링', cost:220000, vax:false}
+  ];
+
   /* 동네 산책 짝 카드에 들어가는 시안용 예시 자료입니다.
      보호자 이름과 사진, 연락처, 정확한 위치, 진료 기록은 담지 않습니다 */
   var WALK = [
@@ -1026,6 +1057,42 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
         '</div>' +
       '</div>';
   }
+
+  /* 우리 아이 진료 기록 타임라인 */
+  function renderVisits(){
+    var summary = document.getElementById('vSummary');
+    var box = document.getElementById('vTimeline');
+    if (!VISITS.length){
+      summary.textContent = '';
+      box.innerHTML = '<li class="empty">아직 쌓인 기록이 없습니다. 접종과 구충, 체중과 투약, 병원 방문이 시간 순으로 이 자리에 놓입니다.</li>';
+      return;
+    }
+    var sorted = VISITS.slice().sort(function(a, b){ return a.date < b.date ? 1 : -1; });
+    var first = sorted[sorted.length - 1];
+    summary.innerHTML = '지금까지 <b>' + VISITS.length + '건</b>의 기록이 쌓였습니다. 첫 기록은 <b>' + esc(fmtDate(first.date)) + '</b>입니다.';
+    box.innerHTML = sorted.map(function(v){
+      return '<li class="' + (v.vax ? 'vax' : '') + '">' +
+        '<span class="d">' + esc(fmtDate(v.date)) + '</span>' +
+        '<span class="h">' + esc(v.hosp) + '</span>' +
+        '<span class="i">' + esc(v.item) + (v.vax ? '<span class="tag">접종</span>' : '') + '</span>' +
+        '<span class="c">' + v.cost.toLocaleString('ko-KR') + '원</span>' +
+      '</li>';
+    }).join('');
+  }
+
+  document.getElementById('v-add').addEventListener('click', function(){
+    var date = document.getElementById('v-date').value;
+    var hosp = document.getElementById('v-hosp').value.trim();
+    var item = document.getElementById('v-item').value.trim();
+    var cost = +document.getElementById('v-cost').value || 0;
+    if (!date || !hosp || !item) return;
+    VISITS.push({date:date, hosp:hosp, item:item, cost:cost, vax:false});
+    document.getElementById('v-date').value = '';
+    document.getElementById('v-hosp').value = '';
+    document.getElementById('v-item').value = '';
+    document.getElementById('v-cost').value = '';
+    renderVisits();
+  });
 
   /* 동네 산책 짝 카드 */
   function renderWalk(){
@@ -1260,7 +1327,7 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
     b.addEventListener('click', function(){ setSpecies(b.getAttribute('data-sp-btn')); });
   });
 
-  renderBadge(); renderAuth(); renderLocks(); renderPet(); renderWalk(); renderInfo();
+  renderBadge(); renderAuth(); renderLocks(); renderPet(); renderVisits(); renderWalk(); renderInfo();
   applyHash();
   syncHeaderHeight();
 })();
