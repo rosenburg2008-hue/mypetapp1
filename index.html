@@ -144,6 +144,8 @@ img,svg{max-width:100%}
 .slots label{display:block;font-size:.86rem;color:var(--ink2);margin-top:12px}
 .slots label:first-of-type{margin-top:0}
 .slots input{display:block;width:100%;margin-top:4px;font:inherit;font-size:.98rem;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:9px 12px}
+.vcheck{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:.92rem;color:var(--ink)}
+.vcheck input{display:inline-block;width:auto;margin:0}
 .receipt{margin-top:14px;width:96px;height:96px;border:1.5px dashed var(--line);border-radius:14px;background:var(--leaf);display:grid;place-items:center;text-align:center;font-size:.8rem;color:var(--ink2);padding:6px}
 .slots .btn{margin-top:16px}
 .vsummary{margin:0 0 12px;font-size:.92rem;color:var(--ink2)}
@@ -433,8 +435,9 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
             <label>병원 이름<input type="text" id="v-hosp" placeholder="예: 마당동물병원" autocomplete="off"></label>
             <label>진료 항목<input type="text" id="v-item" placeholder="예: 종합백신 4차" autocomplete="off"></label>
             <label>금액<input type="number" id="v-cost" placeholder="원" inputmode="numeric" min="0"></label>
+            <label class="vcheck"><input type="checkbox" id="v-vax"> 접종 기록입니다</label>
             <div class="receipt" aria-hidden="true"><span>영수증 사진 자리</span></div>
-            <p class="small" style="margin:8px 0 0">시안이므로 사진은 실제로 올라가지 않고, 입력한 내용은 오른쪽 타임라인에만 더해집니다.</p>
+            <p class="small" style="margin:8px 0 0">시안이므로 사진은 실제로 올라가지 않습니다. 접종 기록으로 체크하면 위 카드의 접종일도 함께 갱신됩니다.</p>
             <button type="button" class="btn primary" id="v-add">추가</button>
           </div>
           <div>
@@ -1014,6 +1017,7 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
   /* 우리 아이 ID 카드 */
   function dnum(s){ var a = s.split('-'); return (+a[0]) * 10000 + (+a[1]) * 100 + (+a[2]); }
   function fmtDate(s){ var a = s.split('-'); return (+a[0]) + '년 ' + (+a[1]) + '월 ' + (+a[2]) + '일'; }
+  function addYear(s){ var a = s.split('-'); return (+a[0] + 1) + '-' + a[1] + '-' + a[2]; }
   function maskReg(s){
     return { front: s.slice(0, 4), dots: new Array(Math.max(s.length - 8, 0) + 1).join('●'), back: s.slice(-4) };
   }
@@ -1085,12 +1089,19 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
     var hosp = document.getElementById('v-hosp').value.trim();
     var item = document.getElementById('v-item').value.trim();
     var cost = +document.getElementById('v-cost').value || 0;
+    var isVax = document.getElementById('v-vax').checked;
     if (!date || !hosp || !item) return;
-    VISITS.push({date:date, hosp:hosp, item:item, cost:cost, vax:false});
+    VISITS.push({date:date, hosp:hosp, item:item, cost:cost, vax:isVax});
+    if (isVax){
+      PET.vaxLast = date;
+      PET.vaxNext = addYear(date);
+      renderPet();
+    }
     document.getElementById('v-date').value = '';
     document.getElementById('v-hosp').value = '';
     document.getElementById('v-item').value = '';
     document.getElementById('v-cost').value = '';
+    document.getElementById('v-vax').checked = false;
     renderVisits();
   });
 
