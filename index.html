@@ -69,7 +69,9 @@ img,svg{max-width:100%}
 /* 인증 안내 영역 */
 .authbox{background:var(--leaf);border-bottom:1.5px solid var(--line);padding:30px 0 34px}
 .glist{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}
-.gcard{background:#fff;border:1.5px solid var(--line);border-top:6px solid var(--ink2);border-radius:18px;padding:16px 18px}
+.gcard{background:#fff;border:1.5px solid var(--line);border-top:6px solid var(--ink2);border-radius:18px;padding:16px 18px;display:flex;flex-direction:column}
+.gcard .sbtn{margin-top:16px;width:100%;text-align:center}
+.gcard .sbtn:disabled{cursor:default;opacity:.7}
 .gcard[data-g="member"]{border-top-color:var(--grass)}
 .gcard[data-g="owner"]{border-top-color:var(--ball)}
 .gcard[data-g="neighbor"]{border-top-color:var(--yarn)}
@@ -113,6 +115,32 @@ img,svg{max-width:100%}
 .sec.dark .lead,.sec.dark .small{color:#C4D3C9}
 .sec-head{margin-bottom:34px}
 .stage{display:inline-block;font-size:.82rem;background:var(--ballSoft);color:var(--ballInk);border-radius:999px;padding:2px 12px;margin-bottom:10px}
+
+/* 우리 아이 ID 카드 */
+.idcard{background:#fff;border:1.5px solid var(--line);border-top:6px solid var(--grass);border-radius:22px;padding:22px 24px;max-width:720px;display:grid;grid-template-columns:132px 1fr auto;gap:18px 22px;align-items:start}
+.idcard[data-sp="dog"]{border-top-color:var(--ball)}
+.idcard[data-sp="cat"]{border-top-color:var(--yarn)}
+.idcard .photo{width:132px;height:132px;border-radius:18px;background:var(--leaf);border:1.5px dashed var(--line);display:grid;place-items:center;gap:2px;align-content:center}
+.idcard[data-sp="dog"] .photo{background:var(--ballSoft)}
+.idcard[data-sp="cat"] .photo{background:var(--yarnSoft)}
+.idcard .photo svg{width:54px;height:54px}
+.idcard .photo span{font-size:.8rem;color:var(--ink2)}
+.idcard .who{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.idcard .who h3{font-size:1.5rem;margin:0}
+.idfacts{margin:12px 0 0;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.95rem}
+.idfacts dt{color:var(--ink2)}
+.idfacts dd{margin:0}
+.idfacts dd.reg{font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.idfacts dd .mask{color:var(--ink2)}
+.vbadges{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.vbadge{display:inline-flex;align-items:center;gap:5px;font-size:.84rem;background:#D9EEDF;color:#1F6B3F;border-radius:999px;padding:2px 12px}
+.qrbox{width:104px;height:104px;border:2px solid var(--ink);border-radius:14px;display:grid;place-items:center;font-family:'Jua';font-size:1.5rem;color:var(--ink);justify-self:end}
+.vax{grid-column:1 / -1;border-top:1px dashed var(--line);padding-top:14px;display:flex;flex-wrap:wrap;gap:8px 28px;align-items:center;font-size:.95rem}
+.vax .lab{color:var(--ink2);margin-right:6px}
+.vax .d{font-variant-numeric:tabular-nums}
+.idnote{max-width:720px;margin-top:12px;border-left:4px solid var(--grass);padding-left:12px;font-size:.9rem;color:var(--ink2)}
+.slots{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:30px}
+.slots h3{margin-bottom:8px}
 
 /* 다음 단계 기능 목록 */
 .panel{background:#fff;border:1.5px solid var(--line);border-radius:22px;padding:22px 24px}
@@ -217,6 +245,11 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
 @media (max-width:900px){
   html{scroll-padding-top:calc(var(--hh,120px) + 12px)}
   .hero .wrap,.two,.two.wide{grid-template-columns:1fr}
+  .slots{grid-template-columns:1fr}
+  .idcard{grid-template-columns:96px 1fr;padding:18px 20px}
+  .idcard .photo{width:96px;height:96px}
+  .idcard .photo svg{width:42px;height:42px}
+  .qrbox{grid-column:1 / -1;justify-self:start}
   .principles,.timeline{grid-template-columns:1fr}
   footer ol{columns:1}
   .top .wrap{gap:8px 10px;padding-left:16px;padding-right:16px}
@@ -282,12 +315,11 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
   <div class="wrap">
     <h2 id="auth-h" tabindex="-1">인증 등급 안내</h2>
     <p class="lead">멍냥마당은 등급에 따라 열리는 기능이 다릅니다. 아무나 볼 수 있는 정보는 열어 두고, 우리 아이의 기록과 이웃을 직접 만나는 기능은 확인된 보호자에게만 엽니다.</p>
-    <div class="glist" id="glist"></div>
     <div class="tryon">
       <b>시안이므로 실제 인증은 하지 않습니다</b>
-      <p class="small" style="margin:4px 0 0">아래 버튼으로 등급을 바꾸면 화면이 어떻게 달라지는지 바로 확인할 수 있습니다. 실제 서비스에서는 본인확인 기관과 동물등록 정보 조회를 거칩니다.</p>
-      <div class="row" id="gswitch" role="group" aria-label="등급 바꿔 보기"></div>
+      <p class="small" style="margin:4px 0 0">카드 안의 버튼으로 등급을 바꾸면 화면이 어떻게 달라지는지 바로 확인할 수 있습니다. 실제 서비스에서는 본인확인 기관과 동물등록 정보 조회를 거칩니다.</p>
     </div>
+    <div class="glist" id="glist"></div>
   </div>
 </section>
 
@@ -359,7 +391,22 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
       <!-- 등급이 모자라면 아래 자리에 잠김 안내가 들어가고, 기능 목록은 숨깁니다 -->
       <div data-lock hidden aria-live="polite"></div>
       <div data-body>
-        <div class="panel">
+        <!-- 펫 ID 카드. 내용은 아래 스크립트의 PET 자료에서 그려집니다 -->
+        <div id="petcard"></div>
+        <p class="idnote">QR을 보여 주면 상대에게는 접종 유효 여부와 이름만 보입니다.</p>
+
+        <div class="slots">
+          <div>
+            <h3>진료 기록</h3>
+            <div class="empty">아직 남긴 진료 기록이 없습니다. 병원 방문, 검사와 처방, 진료비 영수증이 이 자리에 쌓입니다.</div>
+          </div>
+          <div>
+            <h3>타임라인</h3>
+            <div class="empty">아직 쌓인 기록이 없습니다. 접종과 구충, 체중과 투약, 병원 방문이 시간 순으로 이 자리에 놓입니다.</div>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:30px">
           <h3>다음 단계에 들어갈 기능</h3>
           <ul class="nextlist">
             <li>아이 등록: 이름, 종과 품종, 생일, 성별과 중성화 여부, 동물등록번호</li>
@@ -798,13 +845,28 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
   /* 탭과 각 탭에 필요한 등급 */
   var TABS = [
     {k:'pet', n:'우리 아이', need:'owner', why:'아이의 건강 기록은 실제 보호자만 남기고 볼 수 있어야 하므로, 동물등록번호로 보호자임을 확인한 뒤에 열립니다.'},
-    {k:'cost', n:'진료비', need:'guest', why:''},
     {k:'town', n:'동네', need:'neighbor', why:'이웃을 직접 만나는 기능이므로 접종 기록이 최신이고 신고 이력이 없는지까지 확인한 뒤에 열립니다.'},
     {k:'info', n:'정보', need:'guest', why:''},
+    {k:'cost', n:'진료비', need:'guest', why:''},
     {k:'report', n:'기획 제안서', need:'guest', why:''}
   ];
 
   var HOME = 'pet';  /* 처음 들어왔을 때 열리는 기본 화면. 히어로는 이 화면에서만 보입니다 */
+
+  /* 우리 아이 ID 카드에 들어가는 시안용 예시 자료입니다. 보호자 이름과 연락처는 담지 않습니다 */
+  var PET = {
+    sp:'dog',
+    name:'봄이',
+    breed:'토이푸들',
+    birth:'2021-03-04',
+    sex:'여아',
+    neuter:'중성화 완료',
+    reg:'410482103377261',  /* 화면에는 앞 네 자리와 뒤 네 자리만 보이고 가운데는 가립니다 */
+    regOk:true,             /* 동물등록번호 확인됨 */
+    tieOk:true,             /* 보호자 관계 확인됨 */
+    vaxLast:'2026-04-18',
+    vaxNext:'2027-04-18'
+  };
 
   var INFO = [
     {sp:'dog', cat:'먹거리', t:'강아지에게 주면 안 되는 음식', b:'초콜릿, 포도와 건포도, 양파와 마늘, 자일리톨이 든 껌과 과자는 적은 양으로도 중독을 일으킬 수 있습니다. 먹은 것이 의심되면 먹은 양과 시간을 적어 바로 동물병원에 연락하세요.'},
@@ -882,6 +944,53 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
     return out;
   }
 
+  /* 우리 아이 ID 카드 */
+  function dnum(s){ var a = s.split('-'); return (+a[0]) * 10000 + (+a[1]) * 100 + (+a[2]); }
+  function fmtDate(s){ var a = s.split('-'); return (+a[0]) + '년 ' + (+a[1]) + '월 ' + (+a[2]) + '일'; }
+  function maskReg(s){
+    return { front: s.slice(0, 4), dots: new Array(Math.max(s.length - 8, 0) + 1).join('●'), back: s.slice(-4) };
+  }
+
+  function renderPet(){
+    var p = PET;
+    var now = new Date();
+    var today = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+    var ok = dnum(p.vaxNext) >= today;
+    var reg = maskReg(p.reg);
+    var rows = [
+      ['견종', esc(p.breed)],
+      ['생년월일', esc(fmtDate(p.birth))],
+      ['성별', esc(p.sex)],
+      ['중성화 여부', esc(p.neuter)],
+      ['동물등록번호', esc(reg.front) +
+        '<span class="mask" aria-hidden="true">' + reg.dots + '</span>' + esc(reg.back) +
+        '<span class="sr">가운데 자리는 가렸습니다</span>']
+    ];
+    var badges = '';
+    if (p.regOk) badges += '<span class="vbadge"><span class="ck" aria-hidden="true">✓</span>등록번호 확인됨</span>';
+    if (p.tieOk) badges += '<span class="vbadge"><span class="ck" aria-hidden="true">✓</span>보호자 관계 확인됨</span>';
+
+    document.getElementById('petcard').innerHTML =
+      '<div class="idcard" data-sp="' + p.sp + '">' +
+        '<div class="photo"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#i-' + p.sp + '" x="0" y="0" width="48" height="48"/></svg><span>사진 자리</span></div>' +
+        '<div>' +
+          '<div class="who"><h3>' + esc(p.name) + '</h3>' + spChip(p.sp) + '</div>' +
+          '<dl class="idfacts">' +
+            rows.map(function(r){ return '<dt>' + r[0] + '</dt><dd' +
+              (r[0] === '동물등록번호' ? ' class="reg"' : '') + '>' + r[1] + '</dd>'; }).join('') +
+          '</dl>' +
+          '<div class="vbadges">' + badges + '</div>' +
+        '</div>' +
+        '<div class="qrbox" role="img" aria-label="QR 코드 자리">QR</div>' +
+        '<div class="vax">' +
+          '<span><span class="lab">최근 접종일</span><span class="d">' + esc(fmtDate(p.vaxLast)) + '</span></span>' +
+          '<span><span class="lab">다음 접종 예정일</span><span class="d">' + esc(fmtDate(p.vaxNext)) + '</span></span>' +
+          '<span><span class="lab">접종 유효 여부</span><span class="pill ' + (ok ? 'yes' : 'no') + '">' +
+            (ok ? '유효합니다' : '갱신이 필요합니다') + '</span></span>' +
+        '</div>' +
+      '</div>';
+  }
+
   /* 탭 버튼 만들기 */
   var tabsBox = document.querySelector('.tabs');
   tabsBox.innerHTML = TABS.map(function(t){
@@ -906,11 +1015,11 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
         '<h3>' + esc(g.n) + (on ? '<span class="now">지금 내 등급</span>' : '') + '</h3>' +
         '<span class="k">인증 조건</span><ul>' + needList(i) + '</ul>' +
         '<span class="k">열리는 기능</span><ul>' +
-        g.can.map(function(c){ return '<li>' + esc(c) + '</li>'; }).join('') + '</ul></div>';
-    }).join('');
-    document.getElementById('gswitch').innerHTML = GRADES.map(function(g){
-      return '<button type="button" class="sbtn" data-g-set="' + g.k + '" aria-pressed="' +
-        (g.k === state.grade) + '">' + esc(g.n) + ' 등급으로 보기</button>';
+        g.can.map(function(c){ return '<li>' + esc(c) + '</li>'; }).join('') + '</ul>' +
+        (on
+          ? '<button type="button" class="sbtn" disabled aria-pressed="true">지금 내 등급</button>'
+          : '<button type="button" class="sbtn" data-g-set="' + g.k + '" aria-pressed="false">이 등급으로 보기</button>') +
+        '</div>';
     }).join('');
   }
 
@@ -922,7 +1031,7 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
   }
 
   gBtn.addEventListener('click', function(){ setAuth(authBox.hidden); });
-  document.getElementById('gswitch').addEventListener('click', function(e){
+  document.getElementById('glist').addEventListener('click', function(e){
     var b = e.target.closest('[data-g-set]'); if (!b) return;
     setGrade(b.getAttribute('data-g-set'));
   });
@@ -1078,7 +1187,7 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
     b.addEventListener('click', function(){ setSpecies(b.getAttribute('data-sp-btn')); });
   });
 
-  renderBadge(); renderAuth(); renderLocks(); renderInfo();
+  renderBadge(); renderAuth(); renderLocks(); renderPet(); renderInfo();
   applyHash();
   syncHeaderHeight();
 })();
