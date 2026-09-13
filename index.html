@@ -142,6 +142,20 @@ img,svg{max-width:100%}
 .slots{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:30px}
 .slots h3{margin-bottom:8px}
 
+/* 동네 산책 짝 카드 */
+.wlist{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.wcard{background:#fff;border:1.5px solid var(--line);border-top:6px solid var(--ball);border-radius:22px;padding:20px 22px;display:flex;flex-direction:column}
+.wcard .wtop{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.wcard .wtop h3{margin:0;font-size:1.2rem}
+.wcard .breed{font-size:.86rem;font-family:'Gowun Dodum';color:var(--ink2);margin-left:8px}
+.wcard .loc{font-size:.8rem;background:var(--leaf);color:var(--ink2);border-radius:999px;padding:2px 10px;white-space:nowrap}
+.wfacts{margin:14px 0 0;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.92rem}
+.wfacts dt{color:var(--ink2)}
+.wfacts dd{margin:0}
+.wcard .wbtn{margin-top:18px}
+.btn:disabled{cursor:default;opacity:.65}
+.btn:disabled:hover{transform:none}
+
 /* 다음 단계 기능 목록 */
 .panel{background:#fff;border:1.5px solid var(--line);border-radius:22px;padding:22px 24px}
 .panel h3{display:flex;align-items:center;gap:8px}
@@ -150,6 +164,7 @@ img,svg{max-width:100%}
 .nextlist li{margin-bottom:6px}
 .note{border-left:4px solid var(--yarn);background:var(--yarnSoft);color:var(--yarnInk);border-radius:0 14px 14px 0;padding:14px 18px;font-size:.95rem;margin-top:20px}
 .note b{font-family:'Jua';font-weight:400}
+.note.dog{border-left-color:var(--ball);background:var(--ballSoft);color:var(--ballInk)}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
 .sbtn{white-space:nowrap;font:inherit;font-size:.92rem;border:1.5px solid var(--ink);background:#fff;color:var(--ink);border-radius:10px;padding:6px 14px;cursor:pointer}
 .sbtn[aria-pressed="true"]{background:var(--grass);border-color:var(--grass);color:#fff}
@@ -246,6 +261,7 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
   html{scroll-padding-top:calc(var(--hh,120px) + 12px)}
   .hero .wrap,.two,.two.wide{grid-template-columns:1fr}
   .slots{grid-template-columns:1fr}
+  .wlist{grid-template-columns:1fr}
   .idcard{grid-template-columns:96px 1fr;padding:18px 20px}
   .idcard .photo{width:96px;height:96px}
   .idcard .photo svg{width:42px;height:42px}
@@ -455,23 +471,32 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
       <div class="sec-head">
         <span class="stage">1단계 시안, 기능은 다음 단계에서 채웁니다</span>
         <h2 id="town-h">동네</h2>
-        <p class="lead">같은 동네 보호자와 만나는 공간입니다. 산책 친구를 찾고 동네 모임에 참여합니다. 직접 만나는 기능이므로 접종 기록이 최신이고 신고 이력이 없는 이웃 등급부터 열립니다. 위치는 동네 단위까지만 보이고 정확한 주소는 공개하지 않습니다.</p>
+        <p class="lead">우리 강아지에게 매일 저녁 같이 걷는 친구를 만들어 주는 자리입니다. 낮에 혼자 있던 시간을 저녁 산책으로 채웁니다. 강아지가 직접 만나는 일이라 접종 기록이 최신이고 신고 이력이 없는 이웃 등급부터 열립니다. 위치는 동네 단위까지만 보이고 정확한 주소는 공개하지 않습니다. 보호자의 이름과 연락처는 어디에도 표시되지 않습니다.</p>
       </div>
       <div data-lock hidden aria-live="polite"></div>
       <div data-body>
-        <div class="panel">
+        <div class="note dog" style="margin-top:0">
+          <b>여럿 중에서 고르는 매칭이 아닙니다.</b><br>
+          매일 저녁 같이 걷는 산책 짝을 만드는 자리이고, 단둘이서도 시작할 수 있습니다. 개는 낯선 개를 여럿 만나는 것보다 아는 개를 반복해서 만나는 쪽이 사회성에 이롭기 때문에, 새 상대를 계속 보여 주는 대신 한 이웃과 꾸준히 이어지도록 돕습니다.
+        </div>
+
+        <!-- 근처 견주 카드. 내용은 아래 스크립트의 WALK 자료에서 그려집니다 -->
+        <div class="wlist" id="wlist" aria-live="polite"></div>
+
+        <div class="panel" style="margin-top:30px">
           <h3>다음 단계에 들어갈 기능</h3>
           <ul class="nextlist">
-            <li>산책 친구 찾기: 몸집, 산책 시간대, 성향으로 맞추기</li>
+            <li>신청을 상대에게 전달하고 수락 여부 알려주기</li>
+            <li>몸집, 산책 시간대, 성향 조건으로 걸러 보기</li>
+            <li>같은 짝과 몇 번째 걸었는지 세는 산책 기록</li>
+            <li>만남 뒤 우리 아이가 편안했는지 남기기</li>
+            <li>안전 문제 신고 접수와 처리</li>
             <li>동네 산책로와 반려견 동반 장소 지도</li>
-            <li>동네 모임 일정과 신청</li>
-            <li>만남 뒤 남기는 후기, 신고 접수와 처리</li>
-            <li>동네 인증과 활동 범위 설정</li>
           </ul>
         </div>
       </div>
       <div class="note">
-        <b>동네 기능은 개 보호자 전용입니다.</b><br>
+        <b>동네 기능은 강아지 보호자 전용입니다.</b><br>
         고양이는 종 특성상 낯선 공간과 낯선 동물을 만나는 일이 큰 스트레스가 되기 쉽습니다. 그래서 고양이 보호자에게는 대면 교류 대신 우리 아이 기록과 진료비 기능으로 도움을 드립니다. 고양이를 억지로 밖으로 데리고 나오게 만드는 기능은 만들지 않습니다.
       </div>
     </div>
@@ -868,6 +893,17 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
     vaxNext:'2027-04-18'
   };
 
+  /* 동네 산책 짝 카드에 들어가는 시안용 예시 자료입니다.
+     보호자 이름과 사진, 연락처, 정확한 위치, 진료 기록은 담지 않습니다 */
+  var WALK = [
+    {name:'초코', breed:'골든리트리버', age:5, size:'대형', neuter:true, vaxOk:true,
+      pace:'보통', dogDist:'가까이 인사해도 괜찮음', humanDist:'낯가림 없음', bite:false, loc:'같은 동', sent:false},
+    {name:'보리', breed:'비숑프리제', age:2, size:'소형', neuter:true, vaxOk:true,
+      pace:'느긋하게', dogDist:'조금 거리를 두고 지나치기', humanDist:'낯가림 있음', bite:false, loc:'옆 동', sent:false},
+    {name:'두부', breed:'웰시코기', age:7, size:'중형', neuter:false, vaxOk:true,
+      pace:'빠르게', dogDist:'멀리서만 인사하기', humanDist:'낯가림 없음', bite:true, loc:'같은 동', sent:false}
+  ];
+
   var INFO = [
     {sp:'dog', cat:'먹거리', t:'강아지에게 주면 안 되는 음식', b:'초콜릿, 포도와 건포도, 양파와 마늘, 자일리톨이 든 껌과 과자는 적은 양으로도 중독을 일으킬 수 있습니다. 먹은 것이 의심되면 먹은 양과 시간을 적어 바로 동물병원에 연락하세요.'},
     {sp:'dog', cat:'산책', t:'여름 산책 전 7초 손등 확인', b:'아스팔트에 손등을 7초 대었을 때 뜨겁다면 발바닥 화상 위험이 있습니다. 한낮을 피하고 이른 아침이나 해 진 뒤 그늘진 길을 고르세요.'},
@@ -990,6 +1026,43 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
         '</div>' +
       '</div>';
   }
+
+  /* 동네 산책 짝 카드 */
+  function renderWalk(){
+    var box = document.getElementById('wlist');
+    if (!WALK.length){
+      box.innerHTML = '<div class="empty">우리 동네 첫 번째입니다. 산책길에서 만난 분께 알려 주세요.</div>';
+      return;
+    }
+    box.innerHTML = WALK.map(function(d){
+      var badges = (d.vaxOk ? '<span class="vbadge"><span class="ck" aria-hidden="true">✓</span>접종 최신 확인</span>' : '') +
+        '<span class="pill ' + (d.bite ? 'no' : 'yes') + '">' + (d.bite ? '입질 이력 있음' : '입질 이력 없음') + '</span>';
+      return '<div class="wcard">' +
+        '<div class="wtop">' +
+          '<h3>' + esc(d.name) + '<span class="breed">' + esc(d.breed) + '</span></h3>' +
+          '<span class="loc">' + esc(d.loc) + '</span>' +
+        '</div>' +
+        '<dl class="wfacts">' +
+          '<dt>나이</dt><dd>' + d.age + '살</dd>' +
+          '<dt>몸집</dt><dd>' + esc(d.size) + '</dd>' +
+          '<dt>중성화 여부</dt><dd>' + (d.neuter ? '완료' : '안 함') + '</dd>' +
+          '<dt>산책 속도</dt><dd>' + esc(d.pace) + '</dd>' +
+          '<dt>다른 개와의 거리</dt><dd>' + esc(d.dogDist) + '</dd>' +
+          '<dt>사람과의 거리</dt><dd>' + esc(d.humanDist) + '</dd>' +
+        '</dl>' +
+        '<div class="vbadges">' + badges + '</div>' +
+        (d.sent
+          ? '<button type="button" class="btn wbtn" disabled>내일 저녁 산책을 신청했습니다</button>'
+          : '<button type="button" class="btn primary wbtn" data-w-i="' + WALK.indexOf(d) + '">내일 저녁 같이 걸을까요</button>') +
+      '</div>';
+    }).join('');
+  }
+
+  document.getElementById('wlist').addEventListener('click', function(e){
+    var b = e.target.closest('[data-w-i]'); if (!b) return;
+    WALK[+b.getAttribute('data-w-i')].sent = true;
+    renderWalk();
+  });
 
   /* 탭 버튼 만들기 */
   var tabsBox = document.querySelector('.tabs');
@@ -1187,7 +1260,7 @@ footer ol li{margin-bottom:6px;break-inside:avoid}
     b.addEventListener('click', function(){ setSpecies(b.getAttribute('data-sp-btn')); });
   });
 
-  renderBadge(); renderAuth(); renderLocks(); renderPet(); renderInfo();
+  renderBadge(); renderAuth(); renderLocks(); renderPet(); renderWalk(); renderInfo();
   applyHash();
   syncHeaderHeight();
 })();
